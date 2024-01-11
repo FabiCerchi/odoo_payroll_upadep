@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- VENTAJAS -->
+       
+        <record id="upadep_bon_patente_esp" model="hr.contract.advantage.template">
+            <field name="name">UPADEP - BONIFICACION PATENTE ESPECIAL</field>
+            <field name="code">UPADEP_BPE</field>
+            <field name="default_value">1</field>
+            <field name="lower_bound">0</field>
+            <field name="upper_bound">1</field>
+        </record>
+        
+        <record id="adherente_os" model="hr.contract.advantage.template">
+            <field name="name">ADHERENTE OBRA SOCIAL (%)</field>
+            <field name="code">ADHERENTE_OS</field>
+            <field name="default_value">1.5</field>
+            <field name="lower_bound">0</field>
+            <field name="upper_bound">1.5</field>
+        </record>
+        
+        <!-- record id="embargo_alimentos" model="hr.contract.advantage.template">
+            <field name="name">EMBARGO ALIMENTOS (%)</field>
+            <field name="code">EMBARGO_ALIMENTOS</field>
+            <field name="default_value">15</field>
+            <field name="lower_bound">15</field>
+            <field name="upper_bound">30</field>
+        </record>
+        
+        <record id="embargo_judicial" model="hr.contract.advantage.template">
+            <field name="name">EMBARGO JUDICIAL LP (%)</field>
+            <field name="code">EMBARGO_JUDICIAL</field>
+            <field name="default_value">10</field>
+            <field name="lower_bound">10</field>
+            <field name="upper_bound">20</field>
+        </record -->
+
+    </data>
+</odoo>

@@ -1,0 +1,15 @@
+<!-- odoo>
+  <data>
+    <record model="ir.ui.view" id="exe_sale_order_form_custom">
+      <field name="name">sale.order.custom.notes.formm</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.views_order_form"/>
+      <field name="arch" type="xml">
+
+        <xpath expr="//field[@name='ignore_exception']" position="after">
+          <field name="notas_custom"/>
+        </xpath>
+      </field>
+    </record>
+ </data>
+</odoo -->

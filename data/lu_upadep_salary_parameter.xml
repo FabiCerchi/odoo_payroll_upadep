@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- PARAMETROS UPADEP -->
+    <!-- MODELO -->
+    <!-- Parameter: Provisiones SAC -->
+    <record id="prov_sac_parameter" model="base.time.parameter">
+        <field name="name">PROVISION SAC (%)</field>
+        <field name="code">PROV_SAC_RATE</field>
+        <field name="model_id" ref="payroll.model_hr_payslip" />
+    </record>
+    <record id="prov_sac_parameter_0823" model="base.time.parameter.version">
+        <field name="date_from">2023-07-01</field>
+        <field name="value">10.78</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep.prov_sac_parameter" />
+    </record>
+    
+    <!-- Parameter: Provisiones VAC -->
+    <record id="prov_vac_parameter" model="base.time.parameter">
+        <field name="name">PROVISION VAC (%)</field>
+        <field name="code">PROV_VAC_RATE</field>
+        <field name="model_id" ref="payroll.model_hr_payslip" />
+    </record>
+    <record id="prov_vac_parameter_0823" model="base.time.parameter.version">
+        <field name="date_from">2023-07-01</field>
+        <field name="value">2</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep.prov_vac_parameter" />
+    </record>
+    
+    
+    <!-- Parameter: Salario minimo vital y movil --> 
+    <record id="mvi_parameter" model="base.time.parameter">
+        <field name="name">SALARIO MINIMO VITAL Y MOVIL</field>
+        <field name="code">MVI_VALUE</field>
+        <field name="model_id" ref="payroll.model_hr_payslip" />
+    </record>
+    <record id="mvi_parameter_0123" model="base.time.parameter.version">
+        <field name="date_from">2023-01-01</field>
+        <field name="value">65427</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep.mvi_parameter" />
+    </record>
+    <record id="mvi_parameter_0223" model="base.time.parameter.version">
+        <field name="date_from">2023-02-01</field>
+        <field name="value">67743</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep.mvi_parameter" />
+    </record>
+    <record id="mvi_parameter_0323" model="base.time.parameter.version">
+        <field name="date_from">2023-03-01</field>
+        <field name="value">69500</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep.mvi_parameter" />
+    </record>
+    <record id="mvi_parameter_0423" model="base.time.parameter.version">
+        <field name="date_from">2023-04-01</field>
+        <field name="value">80342</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep.mvi_parameter" />
+    </record>
+    <record id="mvi_parameter_0523" model="base.time.parameter.version">
+        <field name="date_from">2023-05-01</field>
+        <field name="value">84512</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep.mvi_parameter" />
+    </record>
+    <record id="mvi_parameter_0623" model="base.time.parameter.version">
+        <field name="date_from">2023-06-01</field>
+        <field name="value">87987</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep.mvi_parameter" />
+    </record>
+    
+    
+    <!-- Parameter: Compensacion Comida --> 
+    <record id="ccomida_parameter" model="base.time.parameter">
+        <field name="name">COMPENSACION COMIDA</field>
+        <field name="code">CCOMIDA_VALUE</field>
+        <field name="model_id" ref="payroll.model_hr_payslip" />
+    </record>
+    <record id="ccomida_parameter_0123" model="base.time.parameter.version">
+        <field name="date_from">2023-01-01</field>
+        <field name="value">1140</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep.ccomida_parameter" />
+    </record>
+    <record id="ccomida_parameter_0323" model="base.time.parameter.version">
+        <field name="date_from">2023-03-01</field>
+        <field name="value">1539</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep.ccomida_parameter" />
+    </record>
+    
+    <!-- Parameter: Compensacion Transporte -->
+    <record id="ctransporte_parameter" model="base.time.parameter">
+        <field name="name">COMPENSACION TRANSPORTE</field>
+        <field name="code">CTRANSPORTE_VALUE</field>
+        <field name="model_id" ref="payroll.model_hr_payslip" />
+    </record>
+    <record id="ctransporte_parameter_0123" model="base.time.parameter.version">
+        <field name="date_from">2023-01-01</field>
+        <field name="value">1297</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep.ctransporte_parameter" />
+    </record>
+    <record id="ctransporte_parameter_0323" model="base.time.parameter.version">
+        <field name="date_from">2023-03-01</field>
+        <field name="value">1751</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep.ctransporte_parameter" />
+    </record>
+    
+    <!-- Parameter: UPSRA-->
+    <record id="upsra_parameter" model="base.time.parameter">
+        <field name="name">UPSRA (%)</field>
+        <field name="code">UPSRA_RATE</field>
+        <field name="model_id" ref="payroll.model_hr_payslip" />
+    </record>
+    <record id="upsra_parameter_0123" model="base.time.parameter.version">
+        <field name="date_from">2023-01-01</field>
+        <field name="value">3</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep.upsra_parameter" />
+    </record>
+    
+    <!-- Parameter: ART PERCAPITA -->
+    <record id="percapita_art_parameter" model="base.time.parameter">
+        <field name="name">SEGURO PER CAPITA ART</field>
+        <field name="code">PERCAPITA_ART_VALUE</field>
+        <field name="model_id" ref="payroll.model_hr_payslip" />
+    </record>
+    <record id="percapita_art_parameter_0123" model="base.time.parameter.version">
+        <field name="date_from">2023-01-01</field>
+        <field name="value">238</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep.percapita_art_parameter" />
+    </record>
+    
+    <!-- Parameter: ART PERCAPITA RATE-->
+    <record id="percapita_art_parameter_rate" model="base.time.parameter">
+        <field name="name">SEGURO PER CAPITA ART RATE</field>
+        <field name="code">PERCAPITA_ART_RATE</field>
+        <field name="model_id" ref="payroll.model_hr_payslip" />
+    </record>
+    <record id="percapita_art_parameter_0123" model="base.time.parameter.version">
+        <field name="date_from">2023-01-01</field>
+        <field name="value">1.68</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep.percapita_art_parameter_rate" />
+    </record>
+    
+    <!-- Parameter: SCVO -->
+    <record id="scvo_parameter" model="base.time.parameter">
+        <field name="name">SEGURO COLECTIVO DE VIDA OBLIGATORIO</field>
+        <field name="code">SCVO_VALUE</field>
+        <field name="model_id" ref="payroll.model_hr_payslip" />
+    </record>
+    <record id="scvo_parameter_0123" model="base.time.parameter.version">
+        <field name="date_from">2023-01-01</field>
+        <field name="value">78.36</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep.scvo_parameter" />
+    </record>
+    
+    <!-- Parameter: UPADEP ASIGNACION RX-->
+    <record id="upadep_rx" model="base.time.parameter">
+        <field name="name">UPADEP - ASIGNACION ESPECIAL RX</field>
+        <field name="code">UPADEP_RX</field>
+        <field name="model_id" ref="payroll.model_hr_payslip" />
+    </record>
+    <!-- Versions -->
+    <record id="upadep_rx_1122" model="base.time.parameter.version">
+        <field name="date_from">2022-11-01</field>
+        <field name="value">9661</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep.upadep_rx" />
+    </record>
+    <record id="upadep_rx_1222" model="base.time.parameter.version">
+        <field name="date_from">2022-12-01</field>
+        <field name="value">10362</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep.upadep_rx" />
+    </record>
+    <record id="upadep_rx_0323" model="base.time.parameter.version">
+        <field name="date_from">2023-03-01</field>
+        <field name="value">13988</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep.upadep_rx" />
+    </record>
+    <record id="upadep_rx_0623" model="base.time.parameter.version">
+        <field name="date_from">2023-06-01</field>
+        <field name="value">16786</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep.upadep_rx" />
+    </record>
+    
+    
+    <!-- Parameter: UPADEP BONIFICACION ESPECIAL PART TIME 4.5HS-->
+    <record id="upadep_bon_especial" model="base.time.parameter">
+        <field name="name">UPADEP - BONIFICACION ESPECIAL PART TIME</field>
+        <field name="code">UPADEP_BON_ESP</field>
+        <field name="model_id" ref="payroll.model_hr_payslip" />
+    </record>
+    <!-- Versions -->
+    <record id="upadep_bon_especial_01_01" model="base.time.parameter.version">
+        <field name="date_from">2001-01-01</field>
+        <field name="value">180</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep.upadep_bon_especial" />
+    </record>
+    
+    <!-- Parameter: UPADEP RET SINDICATO -->
+    <record id="upadep_ret_afiliado" model="base.time.parameter">
+        <field name="name">UPADEP - RETENCION - AFILIADO</field>
+        <field name="code">UPADEP_RET_SIND_AFILIADO</field>
+        <field name="model_id" ref="payroll.model_hr_payslip" />
+    </record>
+    <!-- Versions -->
+    <record id="upadep_ret_afiliado_01" model="base.time.parameter.version">
+        <field name="date_from">2001-01-01</field>
+        <field name="value">2</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep.upadep_ret_afiliado" />
+    </record>
+    
+    <record id="upadep_ret_no_afiliado" model="base.time.parameter">
+        <field name="name">UPADEP - RETENCION - NO AFILIADO</field>
+        <field name="code">UPADEP_RET_SIND_NO_AFILIADO</field>
+        <field name="model_id" ref="payroll.model_hr_payslip" />
+    </record>
+    <!-- Versions -->
+    <record id="upadep_ret__no_afiliado_01" model="base.time.parameter.version">
+        <field name="date_from">2001-01-01</field>
+        <field name="value">2.5</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep.upadep_ret_no_afiliado" />
+    </record>
+    
+    <!-- Parameter: UPADEP CONTRIBUCION EMPRESA -->
+    <record id="upadep_contr_upadep" model="base.time.parameter">
+        <field name="name">UPADEP - CONTRIBUCION UPADEP</field>
+        <field name="code">UPADEP_RET_CONTR_UPADEP</field>
+        <field name="model_id" ref="payroll.model_hr_payslip" />
+    </record>
+    <!-- Versions -->
+    <record id="upadep_contr_upadep_0101" model="base.time.parameter.version">
+        <field name="date_from">2001-01-01</field>
+        <field name="value">972.12</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep.upadep_contr_upadep" />
+    </record>
+    <record id="upadep_contr_upadep_1222" model="base.time.parameter.version">
+        <field name="date_from">2022-12-01</field>
+        <field name="value">1383.40</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep.upadep_contr_upadep" />
+    </record>
+</odoo>
+    

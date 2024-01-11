@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="partner_upadep" model="res.partner">
+            <field name="name">UNION PERSONAL AERONAVEGACION DE ENTES PRIVADOS - LONGPORT ARGENTINA SA</field>
+            <field name="is_company" eval="True"/>
+            <field name='l10n_latam_identification_type_id' ref="l10n_ar.it_cuit"/>
+            <field name='vat'>33709404879</field>
+            <field name='l10n_ar_afip_responsibility_type_id' ref="l10n_ar.res_IVAE"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,19 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="exe_hr_contract_form_custom">
+      <field name="name">hr.contract.form.custom</field>
+      <field name="model">hr.contract</field>
+      <field name="inherit_id" ref="l10n_ar_hr_contract_labor_union.hr_contract_labor_union_hr_contract_view_form"/>
+      <field name="arch" type="xml">
+        <field name="afiliado" position="after">
+            <field name="aporta_ft" />
+            <field name="afiliado_upsra"/>
+            <field name="embargo_judicial"  widget='monetary'  attrs="{'readonly':[('state', '!=', 'draft')]}" invisible="1"/>
+        </field>
+        <field name="date_end" position="after">
+            <field name="tipo_despido" attrs="{'invisible': [('date_end','=', False)]}"/>
+        </field>
+      </field>
+    </record>
+ </data>
+</odoo>

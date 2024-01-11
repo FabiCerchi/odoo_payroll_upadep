@@ -1,0 +1,27 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="exe_payslip_form_custom_rd">
+      <field name="name">hr.payslip.form.custom</field>
+      <field name="model">hr.payslip</field>
+      <field name="inherit_id" ref="payroll.hr_payslip_view_form"/>
+      <field name="arch" type="xml">
+        <field name="hide_invisible_lines" position="after">
+            <field name="aplica_rd" widget="boolean_toggle" attrs="{'readonly': [('state','in',['done'])]}"/>
+            <field name="rd_amount" string="Monto a redondear" attrs="{'invisible': [('aplica_rd','=', False)], 'readonly': [('state','in',['done'])]}"/>
+        </field>
+      </field>
+    </record>
+    
+    <!-- record model="ir.ui.view" id="exe_hr_salary_rules_custom_co">
+      <field name="name">hr.salary.rule.custom</field>
+      <field name="model">hr.salary.rule</field>
+      <field name="inherit_id" ref="l10n_ar_payroll.hr_salary_rule_view_form_inherit_l10n_ar_payroll"/>
+      <field name="arch" type="xml">
+        <field name="acum_base_dif_os" position="after">
+            <field name="acum_base_dif_co" widget="boolean_toggle"/>
+        </field>
+      </field>
+    </record -->
+    
+ </data>
+</odoo>

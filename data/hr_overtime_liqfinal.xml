@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- REGISTROS DE HORAS EXTRAS -->
+    
+    <record id="overtime_ind_ant_h315" model="hr.overtime.type">
+        <field name="name">IND. ANTIGUEDAD</field>
+        <field name="payroll_code">H315</field>
+        <field name="ov_type">news</field>
+        <field name="type">fixed</field>
+        <field name="duration_type">unit</field>
+        <field name="fixed_amount">1.0</field>
+    </record>
+    
+    <record id="overtime_ind_sust_preaviso_h316" model="hr.overtime.type">
+        <field name="name">IND. SUST. PREAVISO</field>
+        <field name="payroll_code">H316</field>
+        <field name="ov_type">news</field>
+        <field name="type">fixed</field>
+        <field name="duration_type">unit</field>
+        <field name="fixed_amount">1.0</field>
+    </record>
+
+    <record id="overtime_integ_mes_despido_h318" model="hr.overtime.type">
+        <field name="name">INTEG MES DESPIDO</field>
+        <field name="payroll_code">H318</field>
+        <field name="ov_type">news</field>
+        <field name="type">fixed</field>
+        <field name="duration_type">unit</field>
+        <field name="fixed_amount">1.0</field>
+    </record>
+
+    <record id="overtime_integ_mes_despido_h318" model="hr.overtime.type">
+        <field name="name">INTEG MES DESPIDO</field>
+        <field name="payroll_code">H318</field>
+        <field name="ov_type">news</field>
+        <field name="type">fixed</field>
+        <field name="duration_type">unit</field>
+        <field name="fixed_amount">1.0</field>
+    </record>
+    
+</odoo>

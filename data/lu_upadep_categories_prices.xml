@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- SINDICATOS -->
+        
+        <!-- FULL TIME --> <!-- LINES 32 - 101 -->
+        <record id="lu_upadep_full_time_8hs" model="hr.labor_union">
+            <field name="sindicato">UPADEP - FULL TIME 8HS</field>
+            <field name="convenio">271/75</field>
+            <field name="basic_div">162</field> 
+            <field name="basic_div_hpd">8</field>
+        </record> 
+        
+        <!-- PART TIME 5HS --> <!-- LINES 103 - -->
+        <record id="lu_upadep_part_time_5hs" model="hr.labor_union">
+            <field name="sindicato">UPADEP - PART TIME 5HS</field>
+            <field name="convenio">271/75</field>
+            <field name="basic_div">101</field> 
+            <field name="basic_div_hpd">8</field>
+        </record> 
+
+        <!-- PART TIME 4HS --> <!-- LINES 158 -  -->
+        <record id="lu_upadep_part_time_4hs" model="hr.labor_union">
+            <field name="sindicato">UPADEP - PART TIME 4HS - 4.5HS</field>
+            <field name="convenio">271/75</field>
+            <field name="basic_div">90</field> 
+            <field name="basic_div_hpd">8</field>
+        </record>        
+        
+        <!-- FULL TIME -->
+        <!-- ENCARGADO DE GRUPO FT -->
+        <record id="general_category_encargado_de_grupo_ft" model="hr.labor_union.category">
+            <field name="labor_union_id" ref="l10n_ar_payroll_lu_upadep.lu_upadep_full_time_8hs" />
+            <field name="name">Encargado de grupo FT</field>
+            <field name="category_period_type">month</field>
+            <field name="code">EP8</field>
+        </record>
+        <record id="category_price_general_category_encargado_de_grupo_ft_112022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_encargado_de_grupo_ft" />
+            <field name="from_date">2022-11-01</field>
+            <field name="value">170314</field>
+        </record>
+        <record id="category_price_general_category_encargado_de_grupo_ft_122022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_encargado_de_grupo_ft" />
+            <field name="from_date">2022-12-01</field>
+            <field name="value">182656</field>
+        </record>
+        <!-- record id="category_price_general_category_encargado_de_grupo_ft_082022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_encargado_de_grupo_ft" />
+            <field name="from_date">2022-08-01</field>
+            <field name="value">1000</field>
+        </record>
+        <record id="category_price_general_category_encargado_de_grupo_ft_092022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_encargado_de_grupo_ft" />
+            <field name="from_date">2022-09-01</field>
+            <field name="value">1500</field>
+        </record -->
+        
+        <!-- AGENTE MAYOR FT -->
+        <record id="general_category_agente_mayor_ft" model="hr.labor_union.category">
+            <field name="labor_union_id" ref="l10n_ar_payroll_lu_upadep.lu_upadep_full_time_8hs" />
+            <field name="name">Agente Mayor FT</field>
+            <field name="category_period_type">month</field>
+            <field name="code">AM8</field>
+        </record>
+        <record id="category_price_general_category_agente_mayor_ft_112022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_agente_mayor_ft" />
+            <field name="from_date">2022-11-01</field>
+            <field name="value">151378</field>
+        </record>
+        <record id="category_price_general_category_agente_mayor_ft_122022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_agente_mayor_ft" />
+            <field name="from_date">2022-12-01</field>
+            <field name="value">162347</field>
+        </record>
+        <!-- AGENTE PRINCIPAL FT -->
+        <record id="general_category_agente_principal_ft" model="hr.labor_union.category">
+            <field name="labor_union_id" ref="l10n_ar_payroll_lu_upadep.lu_upadep_full_time_8hs" />
+            <field name="name">Agente Principal FT</field>
+            <field name="category_period_type">month</field>
+            <field name="code">AP8</field>
+        </record>
+        <record id="category_price_general_category_agente_principal_ft_112022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_agente_principal_ft" />
+            <field name="from_date">2022-11-01</field>
+            <field name="value">127169</field>
+        </record>
+        <record id="category_price_general_category_agente_principal_ft_122022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_agente_principal_ft" />
+            <field name="from_date">2022-12-01</field>
+            <field name="value">136384</field>
+        </record>
+        
+        <!-- AGENTE INGRESANTE FT -->
+        <record id="general_category_agente_ingresante_ft" model="hr.labor_union.category">
+            <field name="labor_union_id" ref="l10n_ar_payroll_lu_upadep.lu_upadep_full_time_8hs" />
+            <field name="name">Agente Ingresante FT</field>
+            <field name="category_period_type">month</field>
+            <field name="code">AI8</field>
+        </record>
+        <record id="category_price_general_category_agente_ingresante_ft_112022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_agente_ingresante_ft" />
+            <field name="from_date">2022-11-01</field>
+            <field name="value">107603</field>
+        </record>
+        <record id="category_price_general_category_agente_ingresante_ft_122022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_agente_ingresante_ft" />
+            <field name="from_date">2022-12-01</field>
+            <field name="value">115400</field>
+        </record>
+        
+        <!-- PART TIME 5HS -->
+        <!-- ENCARGADO DE GRUPO PT 5 -->
+        <record id="general_category_encargado_de_grupo_pt_5" model="hr.labor_union.category">
+            <field name="labor_union_id" ref="l10n_ar_payroll_lu_upadep.lu_upadep_part_time_5hs" />
+            <field name="name">Encargado de grupo PT 5</field>
+            <field name="category_period_type">month</field>
+            <field name="code">EP5</field>
+        </record>
+        <record id="category_price_general_category_encargado_de_grupo_pt_5_112022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_encargado_de_grupo_pt_5" />
+            <field name="from_date">2022-11-01</field>
+            <field name="value">106440</field>
+        </record>
+        <record id="category_price_general_category_encargado_de_grupo_pt_5_122022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_encargado_de_grupo_pt_5" />
+            <field name="from_date">2022-12-01</field>
+            <field name="value">114153</field>
+        </record>
+        
+        <!-- AGENTE PRINCIPAL PT 5 -->
+        <record id="general_category_agente_principal_pt_5" model="hr.labor_union.category">
+            <field name="labor_union_id" ref="l10n_ar_payroll_lu_upadep.lu_upadep_part_time_5hs" />
+            <field name="name">Agente Principal PT 5</field>
+            <field name="category_period_type">month</field>
+            <field name="code">AP5</field>
+        </record>
+        <record id="category_price_general_category_agente_principal_pt_5_112022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_agente_principal_pt_5" />
+            <field name="from_date">2022-11-01</field>
+            <field name="value">79478</field>
+        </record>
+        <record id="category_price_general_category_agente_principal_pt_5_122022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_agente_principal_pt_5" />
+            <field name="from_date">2022-12-01</field>
+            <field name="value">85238</field>
+        </record>
+
+        <!-- AGENTE INGRESANTE PT 5 -->
+        <record id="general_category_agente_ingresante_pt_5" model="hr.labor_union.category">
+            <field name="labor_union_id" ref="l10n_ar_payroll_lu_upadep.lu_upadep_part_time_5hs" />
+            <field name="name">Agente Ingresante PT 5</field>
+            <field name="category_period_type">month</field>
+            <field name="code">AI5</field>
+        </record>
+        <record id="category_price_general_category_agente_ingresante_pt_5_112022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_agente_ingresante_pt_5" />
+            <field name="from_date">2022-11-01</field>
+            <field name="value">67254</field>
+        </record>
+        <record id="category_price_general_category_agente_ingresante_pt_5_122022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_agente_ingresante_pt_5" />
+            <field name="from_date">2022-12-01</field>
+            <field name="value">72127</field>
+        </record>
+        
+        <!-- CATEGORIAS FULL TIME PARA REALIZAR CALCULOS EP9 AP9 AI9  (PART 5HS)-->
+        <!-- ENCARGADO DE GRUPO FT 
+        TODO: BORRAR CUANDO ESTE TODO OK. 
+        <record id="general_category_encargado_de_grupo_calculo_5" model="hr.labor_union.category">
+            <field name="labor_union_id" ref="l10n_ar_payroll_lu_upadep.lu_upadep_part_time_5hs" />
+            <field name="name">Encargado de grupo FT (CALCULO)</field>
+            <field name="category_period_type">month</field>
+            <field name="code">EP9</field>
+        </record>
+        <record id="general_category_encargado_de_grupo_calculo_5_112022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_encargado_de_grupo_calculo_5" />
+            <field name="from_date">2022-11-01</field>
+            <field name="value">170314</field>
+        </record>
+        <record id="general_category_encargado_de_grupo_calculo_5_122022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_encargado_de_grupo_calculo_5" />
+            <field name="from_date">2022-12-01</field>
+            <field name="value">182656</field>
+        </record>
+   
+        <record id="general_category_agente_principal_calculo_5" model="hr.labor_union.category">
+            <field name="labor_union_id" ref="l10n_ar_payroll_lu_upadep.lu_upadep_part_time_5hs" />
+            <field name="name">Agente Principal FT (CALCULO)</field>
+            <field name="category_period_type">month</field>
+            <field name="code">AP9</field>
+        </record>
+        <record id="general_category_agente_principal_calculo_5_112022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_agente_principal_calculo_5" />
+            <field name="from_date">2022-11-01</field>
+            <field name="value">127169</field>
+        </record>
+        <record id="general_category_agente_principal_calculo_5_122022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_agente_principal_calculo_5" />
+            <field name="from_date">2022-12-01</field>
+            <field name="value">136384</field>
+        </record>
+        
+
+        <record id="general_category_agente_ingresante_calculo_5" model="hr.labor_union.category">
+            <field name="labor_union_id" ref="l10n_ar_payroll_lu_upadep.lu_upadep_part_time_5hs" />
+            <field name="name">Agente Ingresante FT (CALCULO)</field>
+            <field name="category_period_type">month</field>
+            <field name="code">AI9</field>
+        </record>
+        <record id="general_category_agente_ingresante_calculo_5_112022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_agente_ingresante_calculo_5" />
+            <field name="from_date">2022-11-01</field>
+            <field name="value">107603</field>
+        </record>
+        <record id="general_category_agente_ingresante_calculo_5_122022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_agente_ingresante_calculo_5" />
+            <field name="from_date">2022-12-01</field>
+            <field name="value">115400</field>
+        </record>
+        -->
+
+        <!-- END CAT FT CALCULO -->
+        
+        <!-- PART TIME 4HS -->
+        <!-- AGENTE PRINCIPAL PT 4 -->
+        <record id="general_category_agente_principal_pt_4" model="hr.labor_union.category">
+            <field name="labor_union_id" ref="l10n_ar_payroll_lu_upadep.lu_upadep_part_time_4hs" />
+            <field name="name">Agente Principal PT 4</field>
+            <field name="category_period_type">month</field>
+            <field name="code">AP4</field>
+        </record>
+        <record id="category_price_general_category_agente_principal_pt_4_112022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_agente_principal_pt_4" />
+            <field name="from_date">2022-11-01</field>
+            <field name="value">63585</field>
+        </record>
+        <record id="category_price_general_category_agente_principal_pt_4_122022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_agente_principal_pt_4" />
+            <field name="from_date">2022-12-01</field>
+            <field name="value">68192</field>
+        </record>
+
+        
+        <!-- AGENTE INGRESANTE PT 4 -->
+        <record id="general_category_agente_ingresante_pt_4" model="hr.labor_union.category">
+            <field name="labor_union_id" ref="l10n_ar_payroll_lu_upadep.lu_upadep_part_time_4hs" />
+            <field name="name">Agente Ingresante PT 4</field>
+            <field name="category_period_type">month</field>
+            <field name="code">AI4</field>
+        </record>
+        <record id="category_price_general_category_agente_ingresante_pt_4_112022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_agente_ingresante_pt_4" />
+            <field name="from_date">2022-11-01</field>
+            <field name="value">53800</field>
+        </record>
+        <record id="category_price_general_category_agente_ingresante_pt_4_122022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_agente_ingresante_pt_4" />
+            <field name="from_date">2022-12-01</field>
+            <field name="value">57698</field>
+        </record>
+        
+        <!-- PART TIME 4.5HS COD: XX0 -->
+        <!-- AGENTE PRINCIPAL AP0 -->
+        <record id="general_category_agente_principal_pt_0" model="hr.labor_union.category">
+            <field name="labor_union_id" ref="l10n_ar_payroll_lu_upadep.lu_upadep_part_time_4hs" />
+            <field name="name">Agente Principal PT 4.5</field>
+            <field name="category_period_type">month</field>
+            <field name="code">AP0</field>
+        </record>
+        <record id="category_price_general_category_agente_principal_pt_0_112022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_agente_principal_pt_0" />
+            <field name="from_date">2022-11-01</field>
+            <field name="value">66713</field>
+        </record>
+        <record id="category_price_general_category_agente_principal_pt_0_122022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_agente_principal_pt_0" />
+            <field name="from_date">2022-12-01</field>
+            <field name="value">76713</field>
+        </record>
+        
+        <!-- AGENTE INGRESANTE COD: AI0 -->
+        <record id="general_category_agente_ingresante_pt_0" model="hr.labor_union.category">
+            <field name="labor_union_id" ref="l10n_ar_payroll_lu_upadep.lu_upadep_part_time_4hs" />
+            <field name="name">Agente Ingresante PT 4.5</field>
+            <field name="category_period_type">month</field>
+            <field name="code">AI0</field>
+        </record>
+        <record id="category_price_general_category_agente_ingresante_pt_0_112022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_agente_ingresante_pt_0" />
+            <field name="from_date">2022-11-01</field>
+            <field name="value">54918</field>
+        </record>
+        <record id="category_price_general_category_agente_ingresante_pt_0_122022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_agente_ingresante_pt_0" />
+            <field name="from_date">2022-12-01</field>
+            <field name="value">64918</field>
+        </record>
+        
+        <!-- CATEGORIAS FULL TIME PARA REALIZAR CALCULOS AP7 AI7 (4HS - 4.5HS)-->
+        <!-- AGENTE PRINCIPAL 
+        TODO: BORRAR CUANDO ESTE TODO OK
+        <record id="general_category_agente_principal_calculo_4" model="hr.labor_union.category">
+            <field name="labor_union_id" ref="l10n_ar_payroll_lu_upadep.lu_upadep_part_time_4hs" />
+            <field name="name">Agente Principal FT (CALCULO)</field>
+            <field name="category_period_type">month</field>
+            <field name="code">AP7</field>
+        </record>
+        <record id="general_category_agente_principal_calculo_4_112022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_agente_principal_calculo_4" />
+            <field name="from_date">2022-11-01</field>
+            <field name="value">127169</field>
+        </record>
+        <record id="general_category_agente_principal_calculo_4_122022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_agente_principal_calculo_4" />
+            <field name="from_date">2022-12-01</field>
+            <field name="value">136384</field>
+        </record>
+        
+        <record id="general_category_agente_ingresante_calculo_4" model="hr.labor_union.category">
+            <field name="labor_union_id" ref="l10n_ar_payroll_lu_upadep.lu_upadep_part_time_4hs" />
+            <field name="name">Agente Ingresante FT (CALCULO)</field>
+            <field name="category_period_type">month</field>
+            <field name="code">AI7</field>
+        </record>
+        <record id="general_category_agente_ingresante_calculo_4_112022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_agente_ingresante_calculo_4" />
+            <field name="from_date">2022-11-01</field>
+            <field name="value">107603</field>
+        </record>
+        <record id="general_category_agente_ingresante_calculo_4_122022" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep.general_category_agente_ingresante_calculo_4" />
+            <field name="from_date">2022-12-01</field>
+            <field name="value">115400</field>
+        </record>
+        -->
+    </data>
+</odoo>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- REGISTROS DE HORAS EXTRAS -->
+    
+    <record id="overtime_type_lp_bono_h300" model="hr.overtime.type">
+        <field name="name">BONIF. ESPECIAL UNICA VEZ</field>
+        <field name="payroll_code">H300</field>
+        <field name="ov_type">news</field>
+        <field name="type">fixed</field>
+        <field name="duration_type">unit</field>
+        <field name="fixed_amount">1.0</field>
+    </record>
+    
+    <record id="overtime_type_lp_dif_acc_mes_ant_h157" model="hr.overtime.type">
+        <field name="name">DIF. AC. UPADEP MES ANT</field>
+        <field name="payroll_code">H157</field>
+        <field name="ov_type">news</field>
+        <field name="type">fixed</field>
+        <field name="duration_type">unit</field>
+        <field name="fixed_amount">1.0</field>
+    </record>
+    
+    <record id="overtime_type_lp_dif_acc_h158" model="hr.overtime.type">
+        <field name="name">DIF. AC. UPADEP</field>
+        <field name="payroll_code">H158</field>
+        <field name="ov_type">news</field>
+        <field name="type">fixed</field>
+        <field name="duration_type">unit</field>
+        <field name="fixed_amount">1.0</field>
+    </record>
+
+    <record id="overtime_type_adicional_temp_h184" model="hr.overtime.type">
+        <field name="name">ADICIONAL TEMPORAL</field>
+        <field name="payroll_code">H184</field>
+        <field name="ov_type">news</field>
+        <field name="type">fixed</field>
+        <field name="duration_type">unit</field>
+        <field name="fixed_amount">1.0</field>
+    </record>
+    
+    <record id="overtime_type_lp_dif_trans_cda_h280" model="hr.overtime.type">
+        <field name="name">DIF. TRANSP. y CDA. AC. UPADEP MES ANT</field>
+        <field name="payroll_code">H280</field>
+        <field name="ov_type">news</field>
+        <field name="type">fixed</field>
+        <field name="duration_type">unit</field>
+        <field name="fixed_amount">1.0</field>
+    </record>
+
+    <record id="overtime_type_lp_dif_trans_cda_h281" model="hr.overtime.type">
+        <field name="name">DIF. TRANSP. y CDA. UPADEP</field>
+        <field name="payroll_code">H281</field>
+        <field name="ov_type">news</field>
+        <field name="type">fixed</field>
+        <field name="duration_type">unit</field>
+        <field name="fixed_amount">1.0</field>
+    </record>
+
+    <record id="overtime_type_lp_anticipo_h256" model="hr.overtime.type">
+        <field name="name">ANTICIPO</field>
+        <field name="payroll_code">H256</field>
+        <field name="ov_type">news</field>
+        <field name="type">fixed</field>
+        <field name="duration_type">unit</field>
+        <field name="fixed_amount">1.0</field>
+    </record>
+
+    <record id="overtime_type_lp_desc_anticipo_h355" model="hr.overtime.type">
+        <field name="name">DESC. ANTICIPO</field>
+        <field name="payroll_code">H355</field>
+        <field name="ov_type">news</field>
+        <field name="type">fixed</field>
+        <field name="duration_type">unit</field>
+        <field name="fixed_amount">1.0</field>
+    </record>
+
+</odoo>

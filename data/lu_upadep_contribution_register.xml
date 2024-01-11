@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- CONTRIBUCION UPAEP -->
+        <record id="contribution_register_SIND_UPAEP" model="hr.contribution.register">
+            <field name="name">UPAEP</field>
+            <field name="partner_id" ref="l10n_ar_payroll_lu_upadep.partner_upadep" />
+            <field name="note">Aportes retenidos al empleado por el empleador, destinados y depositados a la entidad sindical UPAEP.</field>
+        </record>
+    </data>
+</odoo>

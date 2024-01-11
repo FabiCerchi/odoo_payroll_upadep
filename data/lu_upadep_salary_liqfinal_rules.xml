@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="rules_ind_ant_h315" model="hr.salary.rule">
+        <field name="name">IND. ANTIGUEDAD</field>
+        <field name="code">H315</field>
+        <field name="sequence">50170</field>
+        <field name="category_id" ref="l10n_ar_payroll.categories_931NOREM" />
+        <!--field name="parent_rule_id" ref="l10n_ar_payroll_lu_upadep.rules_UPADEP_ANTIGUEDAD" /-->
+        <field name="active">true</field>
+        <field name="appears_on_payslip">true</field>
+        <!-- Condition Select -->
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+# -- Condiciones -- #
+final = payslip.struct_id.code == 'AR-LFREN'
+ant_years = employee.get_service_duration_from_date(payslip.date_to).get('years') > 0.00 or False
+ant_months = employee.get_service_duration_from_date(payslip.date_to).get('months') > 3.00 or False
+result = final or ant_years or ant_months or False
+        </field>
+        <!-- Amount Select -->
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+ant_year = employee.get_service_duration_from_date(payslip.date_to).get('years')
+result_qty = 1
+if ant_year > 0:
+    result_qty = ant_year
+date_from = tools.datetime(payslip.date_to.year, 1, 1)
+date_to = tools.datetime(payslip.date_to.year, payslip.date_to.month, 1)
+forced_ant = inputs.H315 and inputs.H315.amount_qty > 0.00 and inputs.H315.amount_qty
+if forced_ant:
+    result_qty = 1
+    result = forced_ant
+max_gross = payslip.max_sac_gross(date_from, date_to)
+result = forced_ant or max_gross
+        </field>
+    </record>
+
+    <record id="rules_ind_sust_preaviso_h316" model="hr.salary.rule">
+        <field name="name">IND. SUST. PREAVISO</field>
+        <field name="code">H316</field>
+        <field name="sequence">50171</field>
+        <field name="category_id" ref="l10n_ar_payroll.categories_931NOREM" />
+        <!--field name="parent_rule_id" ref="l10n_ar_payroll_lu_upadep.rules_UPADEP_ANTIGUEDAD" /-->
+        <field name="active">true</field>
+        <field name="appears_on_payslip">true</field>
+        <!-- Condition Select -->
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+# -- Condiciones -- #
+final = payslip.struct_id.code == 'AR-LFREN'
+ant_months = employee.get_service_duration_from_date(payslip.date_to).get('months') > 3.00 or False
+causa = contract.tipo_despido == 'sin_causa' or False
+result = final and ant_months and causa or False
+        </field>
+        <!-- Amount Select -->
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+ant_years = employee.get_service_duration_from_date(payslip.date_to).get('years')
+ant_months = employee.get_service_duration_from_date(payslip.date_to).get('months')
+if ant_months > 3 and ant_years &lt; 5:
+    result_qty = 1
+if ant_years >= 5:
+    result_qty = 2
+forced_preaviso = inputs.H316 and inputs.H316.amount_qty > 0.00 and inputs.H316.amount_qty
+result = forced_preaviso or BASIC
+        </field>
+    </record>
+    
+    <record id="rules_sac_preaviso_h317" model="hr.salary.rule">
+        <field name="name">SAC I.S.PREAVISO</field>
+        <field name="code">H317</field>
+        <field name="sequence">50172</field>
+        <field name="category_id" ref="l10n_ar_payroll.categories_931NOREM" />
+        <!--field name="parent_rule_id" ref="l10n_ar_payroll_lu_upadep.rules_UPADEP_ANTIGUEDAD" /-->
+        <field name="active">true</field>
+        <field name="appears_on_payslip">true</field>
+        <!-- Condition Select -->
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+# -- Condiciones -- #
+final = payslip.struct_id.code == 'AR-LFREN'
+causa = contract.tipo_despido == 'sin_causa' or False
+result = final and causa or False
+        </field>
+        <!-- Amount Select -->
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+sin_causa = result_rules.H316.total if result_rules.H316 else False
+if sin_causa:
+  result = sin_causa / 12
+else:
+  result = 0
+        </field>
+    </record>
+    
+    <record id="rules_integ_mes_despido_h318" model="hr.salary.rule">
+        <field name="name">INTEG MES DESPIDO</field>
+        <field name="code">H318</field>
+        <field name="sequence">50173</field>
+        <field name="category_id" ref="l10n_ar_payroll.categories_931NOREM" />
+        <!--field name="parent_rule_id" ref="l10n_ar_payroll_lu_upadep.rules_UPADEP_ANTIGUEDAD" /-->
+        <field name="active">true</field>
+        <field name="appears_on_payslip">true</field>
+        <!-- Condition Select -->
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+# -- Condiciones -- #
+final = payslip.struct_id.code == 'AR-LFREN'
+dias_no_trabajados = (30 - worked_days.WORK100.number_of_days) > 0
+causa = contract.tipo_despido == 'con_causa' or False
+result = final and dias_no_trabajados and causa or False
+        </field>
+        <!-- Amount Select -->
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result_qty = (30 - worked_days.WORK100.number_of_days)
+forced_h318 = inputs.H318 and inputs.H318.amount_qty > 0.00 and inputs.H318.amount_qty
+if forced_h318:
+    result = forced_h318
+else:
+    result = result_rules.BASIC.amount
+        </field>
+    </record>
+
+    <record id="rules_sac_integracion_h319" model="hr.salary.rule">
+        <field name="name">SAC INTEGRACION</field>
+        <field name="code">H319</field>
+        <field name="sequence">50174</field>
+        <field name="category_id" ref="l10n_ar_payroll.categories_931NOREM" />
+        <!--field name="parent_rule_id" ref="l10n_ar_payroll_lu_upadep.rules_UPADEP_ANTIGUEDAD" /-->
+        <field name="active">true</field>
+        <field name="appears_on_payslip">true</field>
+        <!-- Condition Select -->
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+# -- Condiciones -- #
+final = payslip.struct_id.code == 'AR-LFREN'
+dias_no_trabajados = (30 - worked_days.WORK100.number_of_days) > 0
+causa = contract.tipo_despido == 'con_causa' or False
+result = final and dias_no_trabajados and causa or False
+        </field>
+        <!-- Amount Select -->
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+con_causa = result_rules.H318.total if result_rules.H318 else False
+if con_causa:
+  result = con_causa / 12
+else:
+  result = 0
+        </field>
+    </record>
+
+    <record id="rules_ind_art_247_lct_h326" model="hr.salary.rule">
+        <field name="name">IND. Art. 247 LCT</field>
+        <field name="code">H326</field>
+        <field name="sequence">50175</field>
+        <field name="category_id" ref="l10n_ar_payroll.categories_931NOREM" />
+        <!--field name="parent_rule_id" ref="l10n_ar_payroll_lu_upadep.rules_UPADEP_ANTIGUEDAD" /-->
+        <field name="active">true</field>
+        <field name="appears_on_payslip">true</field>
+        <!-- Condition Select -->
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+# -- Condiciones -- #
+final = payslip.struct_id.code == 'AR-LFREN'
+causa = contract.tipo_despido == 'fuerza_mayor' or False
+result = final and causa or False
+        </field>
+        <!-- Amount Select -->
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+ind_antiguedad = result_rules.H315.total if result_rules.H315 else False
+if ind_antiguedad:
+    result_rate = 50
+    result = ind_antiguedad
+else:
+    result = 0
+        </field>
+    </record>
+
+    <record id="rules_ind_art_248_lct_h327" model="hr.salary.rule">
+        <field name="name">IND. Art. 248 LCT</field>
+        <field name="code">H327</field>
+        <field name="sequence">50176</field>
+        <field name="category_id" ref="l10n_ar_payroll.categories_931NOREM" />
+        <!--field name="parent_rule_id" ref="l10n_ar_payroll_lu_upadep.rules_UPADEP_ANTIGUEDAD" /-->
+        <field name="active">true</field>
+        <field name="appears_on_payslip">true</field>
+        <!-- Condition Select -->
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+# -- Condiciones -- #
+final = payslip.struct_id.code == 'AR-LFREN'
+causa = contract.tipo_despido == 'fallecimiento' or False
+result = final and causa or False
+        </field>
+        <!-- Amount Select -->
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+ind_antiguedad = result_rules.H315.total if result_rules.H315 else False
+if ind_antiguedad:
+    result_rate = 50
+    result = ind_antiguedad
+else:
+    result = 0
+        </field>
+    </record>
+
+</odoo>
