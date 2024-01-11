@@ -3,7 +3,7 @@
     'version': '14.0.3.0.0',
     'description': 'Datos y adecuaciones para soportar el sindicato UPADEP en la localizacion Argentina de Payroll.',
     'summary': 'Agrega conceptos, categorias y precios para el sindicato UPADEP.',
-    'author': 'Nimarosa, Exemax',
+    'author': 'Fabian Cerchi, Exemax',
     'website': '',
     'license': 'LGPL-3',
     'category': 'Payroll',
