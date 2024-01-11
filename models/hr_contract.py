@@ -9,7 +9,6 @@ class HrContract(models.Model):
     aporta_ft = fields.Boolean('Aporte Obra Social FT', default=False, help='Fuerza el aporte OS')
     TIPOS_DESPIDO = [
         ('sin_causa', 'Sin Causa'),
-        ('con_causa', 'Con Causa'),
         ('fuerza_mayor', 'Fuerza Mayor'),
         ('fallecimiento', 'Fallecimiento'),
     ]

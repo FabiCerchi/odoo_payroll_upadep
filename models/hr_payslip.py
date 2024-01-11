@@ -54,15 +54,21 @@ class HrPayslip(models.Model):
             if max_sac_gross < max_gross_parcial:
                 max_sac_gross = max_gross_parcial
         
-        return round(max_sac_gross,2)              
-            
+        return round(max_sac_gross,2) 
+        
     def max_sac_gross_ind_ant(self, date_from, date_to):
         '''
         Redefino el calculo del max_sac_gross para el calculo de la indemnizacion por antiguedad.
         
         '''
+        _logger.info('DATE FROM *************:')
+        _logger.info(date_from)
+        _logger.info('DATE TO *************:')
+        _logger.info(date_to)
         date_from = date_from - relativedelta(months=12)
         date_from = date_from.replace(day=1, month=1)
+        _logger.info('DATE FROM C *************:')
+        _logger.info(date_from)
         employee_id = self.employee_id.id
         payslip_ids = self.env['hr.payslip'].search([('employee_id','=',employee_id),
                                                          ('state','=','done'),
@@ -93,8 +99,8 @@ class HrPayslip(models.Model):
             if max_sac_gross < max_gross_parcial:
                 max_sac_gross = max_gross_parcial
         _logger.info(round(max_sac_gross,2))
-        return round(max_sac_gross,2)   
-    
+        return round(max_sac_gross,2)              
+            
     
     #Override computa el neto en regla
     def compute_sheet(self):

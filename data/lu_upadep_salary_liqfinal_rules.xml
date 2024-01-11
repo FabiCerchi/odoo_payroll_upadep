@@ -53,9 +53,10 @@ result = forced_ant or max_gross
         <field name="condition_python">
 # -- Condiciones -- #
 final = payslip.struct_id.code == 'AR-LFREN'
-ant_months = employee.get_service_duration_from_date(payslip.date_to).get('months') > 3.00 or False
-causa = contract.tipo_despido == 'sin_causa' or False
-result = final and ant_months and causa or False
+ant_months = employee.get_service_duration_from_date(payslip.date_to).get('months') >= 3.00 or False
+ant_years = employee.get_service_duration_from_date(payslip.date_to).get('years') > 0.00 or False
+causa = contract.tipo_despido == 'sin_causa' or contract.tipo_despido == 'fuerza_mayor' or False
+result = final and causa and ant_months or ant_years or False
         </field>
         <!-- Amount Select -->
         <field name="amount_select">code</field>
@@ -67,7 +68,10 @@ if ant_months > 3 and ant_years &lt; 5:
 if ant_years >= 5:
     result_qty = 2
 forced_preaviso = inputs.H316 and inputs.H316.amount_qty > 0.00 and inputs.H316.amount_qty
-result = forced_preaviso or BASIC
+antiguedad = result_rules.H010.total if result_rules.H010 else 0.00
+rx= result_rules.H055.total if result_rules.H055 else 0.00
+bc = BASIC + antiguedad + rx
+result = forced_preaviso or bc
         </field>
     </record>
     
@@ -112,18 +116,17 @@ else:
 # -- Condiciones -- #
 final = payslip.struct_id.code == 'AR-LFREN'
 dias_no_trabajados = (30 - worked_days.WORK100.number_of_days) > 0
-causa = contract.tipo_despido == 'con_causa' or False
+causa = contract.tipo_despido == 'sin_causa' or contract.tipo_despido == 'fuerza_mayor' or False
 result = final and dias_no_trabajados and causa or False
         </field>
         <!-- Amount Select -->
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result_qty = (30 - worked_days.WORK100.number_of_days)
-forced_h318 = inputs.H318 and inputs.H318.amount_qty > 0.00 and inputs.H318.amount_qty
-if forced_h318:
-    result = forced_h318
-else:
-    result = result_rules.BASIC.amount
+antiguedad = H010 if result_rules.H010 else 0.00
+rx = result_rules.H055_V.total if inputs.H055 else 0.00
+pat_esp = result_rules.H012.total if result_rules.H012 else 0.00
+result = (BASIC +antiguedad+ rx + pat_esp)/30
         </field>
     </record>
 
@@ -141,15 +144,15 @@ else:
 # -- Condiciones -- #
 final = payslip.struct_id.code == 'AR-LFREN'
 dias_no_trabajados = (30 - worked_days.WORK100.number_of_days) > 0
-causa = contract.tipo_despido == 'con_causa' or False
+causa = contract.tipo_despido == 'sin_causa' or contract.tipo_despido == 'fuerza_mayor' or False
 result = final and dias_no_trabajados and causa or False
         </field>
         <!-- Amount Select -->
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-con_causa = result_rules.H318.total if result_rules.H318 else False
-if con_causa:
-  result = con_causa / 12
+causa = result_rules.H318.total if result_rules.H318 else False
+if causa:
+  result = causa / 12
 else:
   result = 0
         </field>
