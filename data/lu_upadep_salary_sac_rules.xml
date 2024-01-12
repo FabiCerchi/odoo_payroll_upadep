@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- OVERRIDE -->
+    <record id="l10n_ar_payroll.rules_SACPROP" model="hr.salary.rule">
+        <field name="sequence">36000</field>
+        <field name="amount_python_compute">
+# -- Variables -- #
+#amount = categories.GROSS_SAC > VAR_BASE_SAC and categories.GROSS_SAC or VAR_BASE_SAC
+amount = round(categories.GROSS,2) > VAR_BASE_SAC and categories.GROSS or VAR_BASE_SAC
+#result_name = str(round(categories.GROSS,2))
+# -- Calculos -- #
+max_days = 30
+dias_trabajados = min(payslip.get_sac_worked_days(payslip.date_to) + 1, max_days)
+if dias_trabajados &lt; max_days:
+  result = amount / 12
+else:
+  result_qty = payslip.get_sac_worked_days(payslip.date_to) + 1 
+  result = amount / 360
+        </field>        
+    </record>
+    
+</odoo>

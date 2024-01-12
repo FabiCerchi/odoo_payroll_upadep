@@ -21,6 +21,7 @@
         'data/lu_upadep_contribution_register.xml',
         'data/lu_upadep_categories_prices.xml',
         'data/lu_upadep_salary_rules.xml',
+        'data/lu_upadep_salary_sac_rules.xml',
         'data/hr_overtime_liqfinal.xml',
         'data/lu_upadep_salary_liqfinal_rules.xml',
         'data/lu_upadep_salary_structures.xml',
