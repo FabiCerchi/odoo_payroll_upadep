@@ -16,7 +16,8 @@
 final = payslip.struct_id.code == 'AR-LFREN'
 ant_years = employee.get_service_duration_from_date(payslip.date_to).get('years') > 0.00 or False
 ant_months = employee.get_service_duration_from_date(payslip.date_to).get('months') >= 3.00 or False
-result = final or ant_years or ant_months or False
+causa = contract.tipo_despido == 'sin_causa'
+result = final and causa and (ant_years or ant_months) or False
         </field>
         <!-- Amount Select -->
         <field name="amount_select">code</field>
@@ -55,8 +56,8 @@ result = forced_ant or max_gross
 final = payslip.struct_id.code == 'AR-LFREN'
 ant_months = employee.get_service_duration_from_date(payslip.date_to).get('months') >= 3.00 or False
 ant_years = employee.get_service_duration_from_date(payslip.date_to).get('years') > 0.00 or False
-causa = contract.tipo_despido == 'sin_causa' or contract.tipo_despido == 'fuerza_mayor' or False
-result = final and causa and ant_months or ant_years or False
+causa = contract.tipo_despido in ['sin_causa','fuerza_mayor'] or False
+result = final and causa and (ant_months or ant_years) or False
         </field>
         <!-- Amount Select -->
         <field name="amount_select">code</field>
@@ -88,7 +89,7 @@ result = forced_preaviso or bc
         <field name="condition_python">
 # -- Condiciones -- #
 final = payslip.struct_id.code == 'AR-LFREN'
-causa = contract.tipo_despido == 'sin_causa' or False
+causa = contract.tipo_despido in ['sin_causa','fuerza_mayor'] or False 
 result = final and causa or False
         </field>
         <!-- Amount Select -->
@@ -116,7 +117,7 @@ else:
 # -- Condiciones -- #
 final = payslip.struct_id.code == 'AR-LFREN'
 dias_no_trabajados = (30 - worked_days.WORK100.number_of_days) > 0
-causa = contract.tipo_despido == 'sin_causa' or contract.tipo_despido == 'fuerza_mayor' or False
+causa = contract.tipo_despido in ['sin_causa','fuerza_mayor'] or False
 result = final and dias_no_trabajados and causa or False
         </field>
         <!-- Amount Select -->
@@ -144,7 +145,7 @@ result = (BASIC +antiguedad+ rx + pat_esp)/30
 # -- Condiciones -- #
 final = payslip.struct_id.code == 'AR-LFREN'
 dias_no_trabajados = (30 - worked_days.WORK100.number_of_days) > 0
-causa = contract.tipo_despido == 'sin_causa' or contract.tipo_despido == 'fuerza_mayor' or False
+causa = contract.tipo_despido in ['sin_causa','fuerza_mayor'] or False #PREPO
 result = final and dias_no_trabajados and causa or False
         </field>
         <!-- Amount Select -->
@@ -177,12 +178,19 @@ result = final and causa or False
         <!-- Amount Select -->
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-ind_antiguedad = result_rules.H315.total if result_rules.H315 else False
-if ind_antiguedad:
-    result_rate = 50
-    result = ind_antiguedad
-else:
-    result = 0
+ant_years = employee.get_service_duration_from_date(payslip.date_to).get('years')
+ant_months = employee.get_service_duration_from_date(payslip.date_to).get('months')
+result_qty = 0
+if ant_years > 0:
+    result_qty+= ant_years
+if ant_months >= 3:
+    result_qty+= 1
+    
+date_from = payslip.date_to
+date_to = tools.datetime(payslip.date_to.year, payslip.date_to.month, 1)
+max_gross = payslip.max_sac_gross_ind_ant(date_from, date_to)
+result_rate = 50
+result = max_gross
         </field>
     </record>
 
@@ -205,12 +213,19 @@ result = final and causa or False
         <!-- Amount Select -->
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-ind_antiguedad = result_rules.H315.total if result_rules.H315 else False
-if ind_antiguedad:
-    result_rate = 50
-    result = ind_antiguedad
-else:
-    result = 0
+ant_years = employee.get_service_duration_from_date(payslip.date_to).get('years')
+ant_months = employee.get_service_duration_from_date(payslip.date_to).get('months')
+result_qty = 0
+if ant_years > 0:
+    result_qty+= ant_years
+if ant_months >= 3:
+    result_qty+= 1
+    
+date_from = payslip.date_to
+date_to = tools.datetime(payslip.date_to.year, payslip.date_to.month, 1)
+max_gross = payslip.max_sac_gross_ind_ant(date_from, date_to)
+result_rate = 50
+result = max_gross
         </field>
     </record>
 
