@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="overtime_type_lp_casa_comida" model="hr.overtime.type">
+        <field name="name">CASA COMPENSACION COMIDA</field>
+        <field name="payroll_code">H249</field>
+        <field name="ov_type">news</field>
+        <field name="type">fixed</field>
+        <field name="duration_type">unit</field>
+        <field name="fixed_amount">0.0</field>
+    </record>
+
+    <record id="overtime_type_lp_casa_viatico" model="hr.overtime.type">
+        <field name="name">CASA COMPENSACION TRANSPORTE</field>
+        <field name="payroll_code">H248</field>
+        <field name="ov_type">news</field>
+        <field name="type">fixed</field>
+        <field name="duration_type">unit</field>
+        <field name="fixed_amount">0.0</field>
+    </record>
+    
+    
+    <record id="overtime_type_lp_casa_patente_seg" model="hr.overtime.type">
+        <field name="name">CASA PATENTE SEGURIDAD</field>
+        <field name="payroll_code">H056</field>
+        <field name="ov_type">news</field>
+        <field name="type">fixed</field>
+        <field name="duration_type">unit</field>
+        <field name="fixed_amount">0.0</field>
+    </record>
+
+
+</odoo>

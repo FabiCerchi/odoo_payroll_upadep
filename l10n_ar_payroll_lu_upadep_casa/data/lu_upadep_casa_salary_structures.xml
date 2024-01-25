@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Estructura: Basica LCT-->
+    <record id="l10n_ar_payroll.BASE-AR" model="hr.payroll.structure">
+        <field eval="[
+        (4, ref('l10n_ar_payroll_lu_upadep_casa.rules_pat_seguridad_var')), 
+        (4, ref('l10n_ar_payroll_lu_upadep_casa.rules_pat_seguridad')), 
+        (4, ref('l10n_ar_payroll_lu_upadep_casa.rules_casa_transporte')), 
+        (4, ref('l10n_ar_payroll_lu_upadep_casa.rules_casa_comida')), 
+        ]" name="rule_ids"/>
+    </record>
+    
+    <!-- TODO: AGREGAR LAS REGLAS A LAS DIFERENTES ESTRUCTURAS -->
+    
+</odoo>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Parameter: ANTIGUEDAD FIJA PARA CASA-->
+    <record id="upadep_casa_antiguedad" model="base.time.parameter">
+        <field name="name">UPADEP CASA - ANTIGUEDAD</field>
+        <field name="code">UPADEP_CASA_ANTIGUEDAD</field>
+        <field name="model_id" ref="payroll.model_hr_payslip" />
+    </record>
+    <!-- Versions -->
+    <record id="upadep_casa_antiguedad_122023" model="base.time.parameter.version">
+        <field name="date_from">2023-12-01</field>
+        <field name="value">1081.79</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep_casa.upadep_casa_antiguedad" />
+    </record>
+    <record id="upadep_casa_antiguedad_012024" model="base.time.parameter.version">
+        <field name="date_from">2024-01-01</field>
+        <field name="value">1482.05</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep_casa.upadep_casa_antiguedad" />
+    </record>
+    
+    <!-- Parameter: VIATICOS FIJA PARA CASA-->
+    <record id="upadep_casa_viaticos" model="base.time.parameter">
+        <field name="name">UPADEP CASA - TRANSPORTE</field>
+        <field name="code">UPADEP_CASA_TRANSPORTE</field>
+        <field name="model_id" ref="payroll.model_hr_payslip" />
+    </record>
+    <!-- Versions -->
+    <record id="upadep_casa_viaticos_012024" model="base.time.parameter.version">
+        <field name="date_from">2024-01-01</field>
+        <field name="value">3729.44</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep_casa.upadep_casa_viaticos" />
+    </record>
+    
+    <!-- Parameter: COMIDA FIJA PARA CASA-->
+    <record id="upadep_casa_comida" model="base.time.parameter">
+        <field name="name">UPADEP CASA - COMIDA</field>
+        <field name="code">UPADEP_CASA_COMIDA</field>
+        <field name="model_id" ref="payroll.model_hr_payslip" />
+    </record>
+    <!-- Versions -->
+    <record id="upadep_casa_comida_012024" model="base.time.parameter.version">
+        <field name="date_from">2024-01-01</field>
+        <field name="value">2421.76</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep_casa.upadep_casa_comida" />
+    </record>
+
+    <!-- Parameter: PATENTE SEGURIDAD -->
+    <record id="upadep_patente_seguridad" model="base.time.parameter">
+        <field name="name">UPADEP CASA - PATENTE SEGURIDAD</field>
+        <field name="code">UPADEP_CASA_PAT_SEG</field>
+        <field name="model_id" ref="payroll.model_hr_payslip" />
+    </record>
+    <!-- Versions -->
+    <record id="upadep_pat_seg_122023" model="base.time.parameter.version">
+        <field name="date_from">2023-12-01</field>
+        <field name="value">24336.00</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep_casa.upadep_patente_seguridad" />
+    </record>
+    <record id="upadep_pat_seg_012024" model="base.time.parameter.version">
+        <field name="date_from">2024-01-01</field>
+        <field name="value">33340.13</field>
+        <field name="parameter_id" ref="l10n_ar_payroll_lu_upadep_casa.upadep_patente_seguridad" />
+    </record>
+
+</odoo>
+    

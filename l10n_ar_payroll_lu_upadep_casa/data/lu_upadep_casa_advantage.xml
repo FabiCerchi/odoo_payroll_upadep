@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <!-- record id="patente_seg" model="hr.contract.advantage.template">
+            <field name="name">PATENTE SEGURIDAD</field>
+            <field name="code">PAT_SEG</field>
+            <field name="default_value">1</field>
+            <field name="lower_bound">0</field>
+            <field name="upper_bound">1</field>
+        </record -->
+</odoo>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- SINDICATOS -->
+        
+        <!-- FULL TIME --> <!-- LINES 32 - 101 -->
+        <record id="lu_upadep_casa_full_time_8hs" model="hr.labor_union">
+            <field name="sindicato">UPADEP CASA - FT 8 HORAS</field>
+            <field name="convenio">755/18</field>
+            <field name="basic_div">162</field> 
+            <field name="basic_div_hpd">8</field>
+        </record> 
+        
+        <!-- PART TIME 5HS -->
+        <record id="lu_upadep_casa_part_time_5hs" model="hr.labor_union">
+            <field name="sindicato">UPADEP CASA - PT 5 HORAS</field>
+            <field name="convenio">755/18</field>
+            <field name="basic_div">101</field> 
+            <field name="basic_div_hpd">8</field>
+        </record> 
+
+        
+        <!-- FULL TIME -->
+        <!-- AGENTE A  -->
+        <record id="agente_general_a_ft" model="hr.labor_union.category">
+            <field name="labor_union_id" ref="l10n_ar_payroll_lu_upadep_casa.lu_upadep_casa_full_time_8hs" />
+            <field name="name">AGENTE A - FT</field>
+            <field name="category_period_type">month</field>
+            <field name="code">AGA8</field>
+        </record>
+        <record id="category_price_agente_general_a_ft_122023" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep_casa.agente_general_a_ft" />
+            <field name="from_date">2023-12-01</field>
+            <field name="value">428909.00</field>
+        </record>
+        <record id="category_price_agente_general_a_ft_012024" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep_casa.agente_general_a_ft" />
+            <field name="from_date">2024-01-01</field>
+            <field name="value">587605.33</field>
+        </record>
+        
+        <!-- AGENTE B  -->
+        <record id="agente_general_b_ft" model="hr.labor_union.category">
+            <field name="labor_union_id" ref="l10n_ar_payroll_lu_upadep_casa.lu_upadep_casa_full_time_8hs" />
+            <field name="name">AGENTE B - FT</field>
+            <field name="category_period_type">month</field>
+            <field name="code">AGB8</field>
+        </record>
+        <record id="category_price_agente_general_b_ft_122023" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep_casa.agente_general_b_ft" />
+            <field name="from_date">2023-12-01</field>
+            <field name="value">381230.86</field>
+        </record>
+        <record id="category_price_agente_general_b_ft_012024" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep_casa.agente_general_b_ft" />
+            <field name="from_date">2024-01-01</field>
+            <field name="value">522286.28</field>
+        </record>
+        
+        <!-- AGENTE C  -->
+        <record id="agente_general_c_ft" model="hr.labor_union.category">
+            <field name="labor_union_id" ref="l10n_ar_payroll_lu_upadep_casa.lu_upadep_casa_full_time_8hs" />
+            <field name="name">AGENTE C - FT</field>
+            <field name="category_period_type">month</field>
+            <field name="code">AGC8</field>
+        </record>
+        <record id="category_price_agente_general_c_ft_122023" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep_casa.agente_general_c_ft" />
+            <field name="from_date">2023-12-01</field>
+            <field name="value">327198.53</field>
+        </record>
+        <record id="category_price_agente_general_c_ft_012024" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep_casa.agente_general_c_ft" />
+            <field name="from_date">2024-01-01</field>
+            <field name="value">448261.99</field>
+        </record>
+        
+        <!-- AGENTE D  -->
+        <record id="agente_general_d_ft" model="hr.labor_union.category">
+            <field name="labor_union_id" ref="l10n_ar_payroll_lu_upadep_casa.lu_upadep_casa_full_time_8hs" />
+            <field name="name">AGENTE D - FT</field>
+            <field name="category_period_type">month</field>
+            <field name="code">AGD8</field>
+        </record>
+        <record id="category_price_agente_general_d_ft_122023" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep_casa.agente_general_d_ft" />
+            <field name="from_date">2023-12-01</field>
+            <field name="value">320261.21</field>
+        </record>
+        <record id="category_price_agente_general_d_ft_012024" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep_casa.agente_general_d_ft" />
+            <field name="from_date">2024-01-01</field>
+            <field name="value">438757.86</field>
+        </record>
+        
+        <!-- PART TIME -->
+        <!-- AGENTE C -->
+        <record id="agente_general_c_pt" model="hr.labor_union.category">
+            <field name="labor_union_id" ref="l10n_ar_payroll_lu_upadep_casa.lu_upadep_casa_part_time_5hs" />
+            <field name="name">AGENTE C - PT</field>
+            <field name="category_period_type">month</field>
+            <field name="code">AGC5</field>
+        </record>
+        <record id="category_price_agente_general_c_pt_122023" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep_casa.agente_general_c_pt" />
+            <field name="from_date">2023-12-01</field>
+            <field name="value">204500.00</field>
+        </record>
+        <record id="category_price_agente_general_c_pt_012024" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep_casa.agente_general_c_pt" />
+            <field name="from_date">2024-01-01</field>
+            <field name="value">280163.74</field>
+        </record>
+        
+        <!-- AGENTE D -->
+        <record id="agente_general_d_pt" model="hr.labor_union.category">
+            <field name="labor_union_id" ref="l10n_ar_payroll_lu_upadep_casa.lu_upadep_casa_part_time_5hs" />
+            <field name="name">AGENTE D - PT</field>
+            <field name="category_period_type">month</field>
+            <field name="code">AGD5</field>
+        </record>
+        <record id="category_price_agente_general_d_pt_122023" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep_casa.agente_general_d_pt" />
+            <field name="from_date">2023-12-01</field>
+            <field name="value">200264.00</field>
+        </record>
+        <record id="category_price_agente_general_d_pt_012024" model="hr.labor_union.category.price">
+            <field name="labor_union_category_id" ref="l10n_ar_payroll_lu_upadep_casa.agente_general_d_pt" />
+            <field name="from_date">2024-01-01</field>
+            <field name="value">274223.66</field>
+        </record>
+        
+    </data>
+</odoo>

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Concepto: UPADEP ANTIGUEDAD (VAR) -->
+    <record id="l10n_ar_payroll_lu_upadep.rules_UPADEP_ANTIGUEDAD_VAR" model="hr.salary.rule">
+        <field name="amount_python_compute">
+casa = "CASA" in contract.cct_id.sindicato
+if casa:
+    result_qty = employee.get_service_duration_from_date(payslip.date_to).get('years')
+    result = payslip.rule_parameter('UPADEP_CASA_ANTIGUEDAD')
+else:
+  result_rate = 1.00
+  result_qty = employee.get_service_duration_from_date(payslip.date_to).get('years')
+  result = VAR_BASIC
+        </field>
+    </record>
+    
+    <!-- Concepto: UPADEP ANTIGUEDAD -->
+    <record id="l10n_ar_payroll_lu_upadep.rules_UPADEP_ANTIGUEDAD" model="hr.salary.rule">
+        <field name="amount_python_compute">
+casa = "CASA" in contract.cct_id.sindicato
+if casa:
+    result_qty = employee.get_service_duration_from_date(payslip.date_to).get('years')
+    result = payslip.rule_parameter('UPADEP_CASA_ANTIGUEDAD')
+else:
+  result_rate = 1.00
+  result_qty = employee.get_service_duration_from_date(payslip.date_to).get('years')
+  result = BASIC
+        </field>
+    </record>
+    
+        <!-- Concepto: OS -->
+    <record id="l10n_ar_payroll_lu_upadep.rules_UPADEP_OS" model="hr.salary.rule">
+        <field name="amount_python_compute">
+agentes_principales = ['AP4','AP0','AP5']
+agentes_ingresantes = ['AI4','AI0','AI5']
+encargado_grupo = ['EP5']
+agentes_casa_pt = ['AGC5','AGD5']
+result_rate = -3
+result_name = contract.afip_obra_social_id.name
+if payslip.struct_id.code == 'VAC-AR':
+    result = H118 if result_rules.H118 else 0.00
+else:
+    if contract.cct_category_id.code in agentes_principales + agentes_ingresantes + encargado_grupo + agentes_casa_pt:
+        if payslip.struct_id.code == 'AJUSTE-AR':
+            result = categories.GROSS or 0.00
+        else:
+            if contract.cct_category_id.code in agentes_principales:
+                #basic_full = current_contract.cct_categories.AP7 
+                basic_full = payslip.env['hr.payslip'].get_category_value_price_by_code_and_date("AP8",payslip.date_from) #Agente principal
+                ant_full = (basic_full*employee.get_service_duration_from_date(payslip.date_to).get('years'))/100 if employee.get_service_duration_from_date(payslip.date_to).get('years') > 0.00 else 0.00
+                #result = basic_full+ant_full if basic_full+ant_full > categories.GROSS else categories.GROSS
+              
+            if contract.cct_category_id.code in agentes_ingresantes:
+                #basic_full = current_contract.cct_categories.AI7 #Agente ingresante FT
+                basic_full = payslip.env['hr.payslip'].get_category_value_price_by_code_and_date("AI8",payslip.date_from) #Agente ingresante 
+                ant_full = (basic_full*employee.get_service_duration_from_date(payslip.date_to).get('years'))/100 if employee.get_service_duration_from_date(payslip.date_to).get('years') > 0.00 else 0.00
+                #result = basic_full+ant_full if basic_full+ant_full > categories.GROSS else categories.GROSS
+      
+            if contract.cct_category_id.code in encargado_grupo:
+                #basic_full = current_contract.cct_categories.EP9 
+                basic_full = payslip.env['hr.payslip'].get_category_value_price_by_code_and_date("EP8",payslip.date_from) #Encargado de grupo
+                ant_full = (basic_full*employee.get_service_duration_from_date(payslip.date_to).get('years'))/100 if employee.get_service_duration_from_date(payslip.date_to).get('years') > 0.00 else 0.00
+                #result = basic_full+ant_full if basic_full+ant_full > categories.GROSS else categories.GROSS
+            
+            #CASA 
+            if contract.cct_category_id.code == 'AGC5':
+                basic_full = payslip.env['hr.payslip'].get_category_value_price_by_code_and_date("AGC8",payslip.date_from) #AGENTE C FT
+                ant_full = (payslip.rule_parameter('UPADEP_CASA_ANTIGUEDAD')*employee.get_service_duration_from_date(payslip.date_to).get('years')) if employee.get_service_duration_from_date(payslip.date_to).get('years') > 0.00 else 0.00
+            
+            if contract.cct_category_id.code == 'AGD5':
+                basic_full = payslip.env['hr.payslip'].get_category_value_price_by_code_and_date("AGD8",payslip.date_from) #AGENTE D FT
+                ant_full = (payslip.rule_parameter('UPADEP_CASA_ANTIGUEDAD')*employee.get_service_duration_from_date(payslip.date_to).get('years')) if employee.get_service_duration_from_date(payslip.date_to).get('years') > 0.00 else 0.00
+            
+            
+            '''
+            liq_normal = basic_full+ant_full if basic_full+ant_full > categories.GROSS else categories.GROSS
+            base_liq_sac = liq_normal/2
+            liq_sac = categories.GROSS if categories.GROSS > base_liq_sac else base_liq_sac
+            result_qty = max(0, min(30, worked_days.WORK100.number_of_days))
+            result = (liq_sac if payslip.struct_id.code == 'AR-SAC' else liq_normal)/30
+            '''
+            base_calculo = ((basic_full+ant_full)/30)* max(0, min(30, worked_days.WORK100.number_of_days))
+            #liq_normal = basic_full+ant_full if basic_full+ant_full > categories.GROSS else categories.GROSS
+            base_calculo = base_calculo if base_calculo > categories.GROSS else categories.GROSS
+            base_liq_sac = base_calculo/2
+            #result_name = str(liq_normal)
+            liq_sac = categories.GROSS if categories.GROSS > base_liq_sac else base_liq_sac
+            #result_qty = max(0, min(30, worked_days.WORK100.number_of_days))
+            result = (liq_sac if payslip.struct_id.code == 'AR-SAC' else base_calculo)
+    else:
+        tope_min = TOP_MIN > categories.GROSS and TOP_MIN or False
+        tope_max = TOP_MAX &lt; categories.GROSS and TOP_MAX or False
+        apply_topes = tope_min or tope_max
+        if payslip.struct_id.code == 'AJUSTE-AR':
+            result = categories.GROSS or 0.00
+        else:
+            if contract.aporta_ft:
+                result_qty = 1
+                basic_full = payslip.env['hr.payslip'].get_category_value_price_by_code_and_date("AP8",payslip.date_from) #Agente principal
+                base_ant_full = (basic_full*employee.get_service_duration_from_date(payslip.date_to).get('years'))/100 if employee.get_service_duration_from_date(payslip.date_to).get('years') > 0.00 else 0.00
+                nueva_base = basic_full + base_ant_full
+                result = categories.GROSS if categories.GROSS > nueva_base else nueva_base
+            else:
+              result = tope_min or tope_max or categories.GROSS
+
+        </field>
+    </record>
+    
+    
+    <!-- Concepto: PATENTE SEGURIDAD VAR -->
+    <record id="rules_pat_seguridad_var" model="hr.salary.rule">
+        <field name="name">PATENTE SEGURIDAD</field>
+        <field name="code">H056_V</field>
+        <field name="sequence">15113</field>
+        <field name="category_id" ref="l10n_ar_payroll.categories_CBASIC" />
+        <field name="active">true</field>
+        <field name="appears_on_payslip">false</field>
+        <!-- Condition Select -->
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+# -- Condiciones -- #
+casa = "CASA" in contract.cct_id.sindicato
+pat_seg = inputs.H056
+result = casa and pat_seg or False
+        </field>
+        <!-- Amount Select -->
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = payslip.rule_parameter('UPADEP_CASA_PAT_SEG')
+        </field>
+
+    </record>
+    
+    <!-- Concepto: PATENTE SEGURIDAD -->
+    <record id="rules_pat_seguridad" model="hr.salary.rule">
+        <field name="name">PATENTE SEGURIDAD</field>
+        <field name="code">H056</field>
+        <field name="sequence">15114</field>
+        <field name="category_id" ref="l10n_ar_payroll.categories_931BASIC" />
+        <field name="active">true</field>
+        <field name="appears_on_payslip">true</field>
+        <!-- Condition Select -->
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+# -- Condiciones -- #
+casa = "CASA" in contract.cct_id.sindicato
+pat_seg = inputs.H056
+result = casa and pat_seg or False
+        </field>
+        <!-- Amount Select -->
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = payslip.rule_parameter('UPADEP_CASA_PAT_SEG')
+        </field>
+    </record>
+    
+    <!-- Concepto: DIA DEL AERONAUTICO  TODO FIJARSE CUALES SON LAS LIC QUE SUMAN 30 PARA PODER CALCULAR EL DIA-->
+    <record id="l10n_ar_payroll_lu_upadep.rules_UPADEP_DIA_AERO" model="hr.salary.rule">
+    <field name="sequence">15115</field>
+        <field name="condition_python">
+# -- Condiciones -- #
+periodoAeronautico = 1
+esPeriodoAero = payslip.date_from.month == periodoAeronautico
+dias_excedencias = worked_days.H133.number_of_days if worked_days.H133 else 0.0
+dias_maternidad = worked_days.H110.number_of_days if worked_days.H110 else 0.0
+dias_sin_goce = worked_days.H122.number_of_days if worked_days.H122 else 0.0
+aplica_por_lic = abs(dias_excedencias + dias_maternidad +  dias_sin_goce) &lt; 30
+result = esPeriodoAero and aplica_por_lic or False
+        </field>
+    </record>
+
+    <record id="l10n_ar_payroll_lu_upadep.rules_UPADEP_FERIADOS" model="hr.salary.rule">
+    <field name="sequence">15116</field>
+        <field name="amount_python_compute">
+mapeo_horas_contrato = {
+      'FT': 8,
+      'PT5': 5,
+      "PT4": 4,
+      "PT45":4.5
+}
+basic_div = contract.cct_id.basic_div
+if basic_div == 101: #PT
+  result_qty = worked_days.H050.number_of_hours/mapeo_horas_contrato['PT5']
+elif basic_div == 90:
+  if contract.cct_category_id.code in ['AP4', 'AI4']:
+    result_qty = worked_days.H050.number_of_hours/mapeo_horas_contrato['PT4']
+  else:
+    result_qty = worked_days.H050.number_of_hours/mapeo_horas_contrato['PT45']
+else:
+    result_qty = worked_days.H050.number_of_hours/mapeo_horas_contrato['FT']
+
+result_name = 'FERIADOS'
+result = (categories.CBASIC) /25
+        </field>
+    </record>
+    
+    <record id="rules_casa_transporte" model="hr.salary.rule">
+        <field name="name">COMPENSACION TRANSPORTE</field>
+        <field name="code">H248</field>
+        <field name="sequence">15117</field>
+        <field name="category_id" ref="l10n_ar_payroll.categories_931BASIC" /> 
+        <field name="active">true</field>
+        <field name="appears_on_payslip">true</field>
+        <!-- Condition Select -->
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+# -- Condiciones -- #
+sindicato_casa = "CASA" in contract.cct_id.sindicato
+cc = inputs.H248
+result = sindicato_casa and cc or False
+        </field>
+        <!-- Amount Select -->
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result_qty = inputs.H248.amount_qty
+result = payslip.rule_parameter('UPADEP_CASA_TRANSPORTE')
+        </field>
+    </record>
+
+    <record id="rules_casa_comida" model="hr.salary.rule">
+        <field name="name">COMPENSACION COMIDA</field>
+        <field name="code">H249</field>
+        <field name="sequence">15118</field>
+        <field name="category_id" ref="l10n_ar_payroll.categories_931BASIC" /> 
+        <field name="active">true</field>
+        <field name="appears_on_payslip">true</field>
+        <!-- Condition Select -->
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+# -- Condiciones -- #
+sindicato_casa = "CASA" in contract.cct_id.sindicato
+cc = inputs.H249
+result = sindicato_casa and cc or False
+        </field>
+        <!-- Amount Select -->
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result_qty = inputs.H249.amount_qty
+result = payslip.rule_parameter('UPADEP_CASA_COMIDA')
+        </field>
+    </record>
+    
+</odoo>

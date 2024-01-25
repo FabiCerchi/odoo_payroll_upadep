@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>    
+    <!-- HORAS EXTRAS NOCTURNAS H142 -->
+    <record id="l10n_ar_payroll_lu_upadep.rules_UPADEP_HS_NOC" model="hr.salary.rule">
+        <field name="amount_python_compute">
+result_qty = worked_days.H142.number_of_hours
+bp  = result_rules.H052.total if inputs.H052 else 0.00
+feriados = result_rules.H050.total if result_rules.H050 else 0.00
+result_name = 'HORAS NOCTURNAS'
+base_imponible = categories.CBASIC+bp+feriados
+divisor_categoria = contract.cct_id.basic_div
+coheficiente = 0.1333
+result = round((base_imponible/divisor_categoria)*coheficiente,2)
+        </field>
+    </record>
+    <!-- HORAS EXTRAS DIURNAS AL 50% H140 -->
+    <record id="l10n_ar_payroll_lu_upadep.rules_UPADEP_HSD_50" model="hr.salary.rule">
+        <field name="amount_python_compute">
+esMesAumento = any(p.from_date == payslip.date_from for p in contract.cct_category_id.category_price_ids) or False
+result_qty = worked_days.H140.number_of_hours
+result_rate = (payslip.env['hr.overtime.type'].search([('payroll_code','=','H140')],limit = 1)[0].add_percentage_amount)
+feriados = result_rules.H050.total if result_rules.H050 else 0.00
+if esMesAumento:
+    # -- VALORES DE CATEGORIA -- #
+    previus_category_price_ids_list = [cat_id for cat_id in contract.cct_category_id.category_price_ids if payslip.date_from > cat_id.from_date]
+    previus_value = sorted(previus_category_price_ids_list)[0].value 
+    basic_average = ((previus_value/30)*10) + ((BASIC/30)*20)
+    
+    # --- ANTIGUEDAD --#
+    if "CASA" in contract.cct_id.sindicato:
+        if employee.get_service_duration_from_date(payslip.date_to).get('years') > 0.00:
+            current_value_ant = payslip.rule_parameter('UPADEP_CASA_ANTIGUEDAD')
+            parameter_list_ids = payslip.env['base.time.parameter'].search([('code','=','UPADEP_CASA_ANTIGUEDAD')],limit = 1)
+            previus_version_upadep_ant_list = [version_id for version_id in parameter_list_ids[0].version_ids if payslip.date_from > version_id.date_from]
+            previus_version_ant_value = sorted(previus_version_upadep_ant_list)[0].value
+            antiguedad_average = round(((float(previus_version_ant_value)/30)*10) + ((float(current_value_ant)/30)*20),2) * employee.get_service_duration_from_date(payslip.date_to).get('years')
+        else:
+            antiguedad_average = 0.00
+    else:
+        antiguedad_average = (basic_average*employee.get_service_duration_from_date(payslip.date_to).get('years') or 0.00)/100
+       
+    # -- VALORES DE RX -- # 
+    rx_average = 0.00
+    if inputs.H055:
+        current_value_rx = payslip.rule_parameter('UPADEP_RX')
+        parameter_list_ids = payslip.env['base.time.parameter'].search([('code','=','UPADEP_RX')],limit = 1)
+        previus_version_upadep_rx_list = [version_id for version_id in parameter_list_ids[0].version_ids if payslip.date_from > version_id.date_from]
+        previus_version_rx_value = sorted(previus_version_upadep_rx_list)[0].value
+        rx_average = round(((float(previus_version_rx_value)/30)*10) + ((float(current_value_rx)/30)*20),2)
+        
+    # -- PATENTE SEGURIDAD -- #
+    pat_seg_promedio  = 0.00
+    tiene_patente = True if result_rules.H056 and "CASA" in contract.cct_id.sindicato else False
+    if tiene_patente:
+        current_value_pat_seg = payslip.rule_parameter('UPADEP_CASA_PAT_SEG')
+        parameter_list_ids = payslip.env['base.time.parameter'].search([('code','=','UPADEP_CASA_PAT_SEG')],limit = 1)
+        previus_version_upadep_pat_seg_list = [version_id for version_id in parameter_list_ids[0].version_ids if payslip.date_from > version_id.date_from]
+        previus_version_pat_seg_value = sorted(previus_version_upadep_pat_seg_list)[0].value
+        pat_seg_promedio = round(((float(previus_version_pat_seg_value)/30)*10) + ((float(current_value_pat_seg)/30)*20),2)
+        
+    # -- FERIADOS -- #
+    feriados = result_rules.H050.total if result_rules.H050 else 0.00
+    
+    # -- PATENTE --- #
+    patente = result_rules.H012.total if result_rules.H012 else 0.00
+    
+    #-- NUEVO BASICO --#
+    new_basic = basic_average + antiguedad_average + rx_average + feriados + patente + pat_seg_promedio
+    new_hr = round(((new_basic/contract.cct_id.basic_div)),2)
+    result_name = "HS DIURNAS AL 50% INC" 
+    result = new_hr
+else:
+    result_name = "HS DIURNAS AL 50%"
+    result = (((categories.CBASIC+feriados)/contract.cct_id.basic_div))
+        </field>
+    </record>
+    
+    <!-- HORAS EXTRAS NOCTURNAS AL 50% H143 -->
+    <record id="l10n_ar_payroll_lu_upadep.rules_UPADEP_HSN_50" model="hr.salary.rule">
+        <field name="amount_python_compute">
+esMesAumento = any(p.from_date == payslip.date_from for p in contract.cct_category_id.category_price_ids) or False
+result_qty = worked_days.H143.number_of_hours
+result_rate = (payslip.env['hr.overtime.type'].search([('payroll_code','=','H143')],limit = 1)[0].add_percentage_amount)
+feriados = result_rules.H050.total if result_rules.H050 else 0.00
+if esMesAumento:
+    # -- VALORES DE CATEGORIA -- #
+    #current_value = contract.cct_category_id.current_value
+    previus_category_price_ids_list = [cat_id for cat_id in contract.cct_category_id.category_price_ids if payslip.date_from > cat_id.from_date]
+    previus_value = sorted(previus_category_price_ids_list)[0].value 
+    basic_average = ((previus_value/30)*10) + ((BASIC/30)*20)
+
+    # --- ANTIGUEDAD --#
+    if "CASA" in contract.cct_id.sindicato:
+        if employee.get_service_duration_from_date(payslip.date_to).get('years') > 0.00:
+            current_value_ant = payslip.rule_parameter('UPADEP_CASA_ANTIGUEDAD')
+            parameter_list_ids = payslip.env['base.time.parameter'].search([('code','=','UPADEP_CASA_ANTIGUEDAD')],limit = 1)
+            previus_version_upadep_ant_list = [version_id for version_id in parameter_list_ids[0].version_ids if payslip.date_from > version_id.date_from]
+            previus_version_ant_value = sorted(previus_version_upadep_ant_list)[0].value
+            antiguedad_average = round(((float(previus_version_ant_value)/30)*10) + ((float(current_value_ant)/30)*20),2) * employee.get_service_duration_from_date(payslip.date_to).get('years')
+        else:
+            antiguedad_average = 0.00
+    else:
+        antiguedad_average = (basic_average*employee.get_service_duration_from_date(payslip.date_to).get('years') or 0.00)/100
+       
+    # -- VALORES DE RX -- # 
+    #Verificar si existe este parametro en el payslip 
+    rx_average = 0.00
+    if inputs.H055:
+        current_value_rx = payslip.rule_parameter('UPADEP_RX')
+        parameter_list_ids = payslip.env['base.time.parameter'].search([('code','=','UPADEP_RX')],limit = 1)
+        previus_version_upadep_rx_list = [version_id for version_id in parameter_list_ids[0].version_ids if payslip.date_from > version_id.date_from]
+        previus_version_rx_value = sorted(previus_version_upadep_rx_list)[0].value
+        rx_average = round(((float(previus_version_rx_value)/30)*10) + ((float(current_value_rx)/30)*20),2)
+
+    # -- PATENTE SEGURIDAD -- #
+    pat_seg_promedio  = 0.00
+    tiene_patente = True if result_rules.H056 and "CASA" in contract.cct_id.sindicato else False
+    if tiene_patente:
+        current_value_pat_seg = payslip.rule_parameter('UPADEP_CASA_PAT_SEG')
+        parameter_list_ids = payslip.env['base.time.parameter'].search([('code','=','UPADEP_CASA_PAT_SEG')],limit = 1)
+        previus_version_upadep_pat_seg_list = [version_id for version_id in parameter_list_ids[0].version_ids if payslip.date_from > version_id.date_from]
+        previus_version_pat_seg_value = sorted(previus_version_upadep_pat_seg_list)[0].value
+        pat_seg_promedio = round(((float(previus_version_pat_seg_value)/30)*10) + ((float(current_value_pat_seg)/30)*20),2)
+        
+    # -- BASIC DIV -- #
+    feriados = result_rules.H050.total if result_rules.H050 else 0.00
+    #Patente 
+    patente = result_rules.H012.total if result_rules.H012 else 0.00
+    
+    #-- NUEVO BASICO --#
+    new_basic = basic_average + antiguedad_average + rx_average + feriados + patente + pat_seg_promedio
+    new_hr = round(((new_basic/contract.cct_id.basic_div)*1.1333),2)
+    result_name = "HS NOCTURNAS AL 50% INC"
+    result = new_hr
+else:
+    result_name = "HS NOCTURNAS AL 50%"
+    result = (((categories.CBASIC + feriados)/contract.cct_id.basic_div)*1.1333)
+        </field>
+    </record>
+    
+    <!-- HORAS EXTRAS NOCTURNAS AL 50% H143 -->
+    <record id="l10n_ar_payroll_lu_upadep.rules_UPADEP_HSN_100" model="hr.salary.rule">
+        <field name="amount_python_compute">
+esMesAumento = any(p.from_date == payslip.date_from for p in contract.cct_category_id.category_price_ids) or False
+result_qty = worked_days.H144.number_of_hours
+result_rate = (payslip.env['hr.overtime.type'].search([('payroll_code','=','H144')],limit = 1)[0].add_percentage_amount)
+feriados = result_rules.H050.total if result_rules.H050 else 0.00
+if esMesAumento:
+    # -- VALORES DE CATEGORIA -- #
+    #current_value = contract.cct_category_id.current_value
+    previus_category_price_ids_list = [cat_id for cat_id in contract.cct_category_id.category_price_ids if payslip.date_from > cat_id.from_date]
+    previus_value = sorted(previus_category_price_ids_list)[0].value 
+    basic_average = ((previus_value/30)*10) + ((BASIC/30)*20)
+
+    # --- ANTIGUEDAD --#
+    if "CASA" in contract.cct_id.sindicato:
+        if employee.get_service_duration_from_date(payslip.date_to).get('years') > 0.00:
+            current_value_ant = payslip.rule_parameter('UPADEP_CASA_ANTIGUEDAD')
+            parameter_list_ids = payslip.env['base.time.parameter'].search([('code','=','UPADEP_CASA_ANTIGUEDAD')],limit = 1)
+            previus_version_upadep_ant_list = [version_id for version_id in parameter_list_ids[0].version_ids if payslip.date_from > version_id.date_from]
+            previus_version_ant_value = sorted(previus_version_upadep_ant_list)[0].value
+            antiguedad_average = round(((float(previus_version_ant_value)/30)*10) + ((float(current_value_ant)/30)*20),2) * employee.get_service_duration_from_date(payslip.date_to).get('years')
+        else:
+            antiguedad_average = 0.00
+    else:
+        antiguedad_average = (basic_average*employee.get_service_duration_from_date(payslip.date_to).get('years') or 0.00)/100
+       
+    # -- VALORES DE RX -- # 
+    #Verificar si existe este parametro en el payslip 
+    rx_average = 0.00
+    if inputs.H055:
+        current_value_rx = payslip.rule_parameter('UPADEP_RX')
+        parameter_list_ids = payslip.env['base.time.parameter'].search([('code','=','UPADEP_RX')],limit = 1)
+        previus_version_upadep_rx_list = [version_id for version_id in parameter_list_ids[0].version_ids if payslip.date_from > version_id.date_from]
+        previus_version_rx_value = sorted(previus_version_upadep_rx_list)[0].value
+        rx_average = round(((float(previus_version_rx_value)/30)*10) + ((float(current_value_rx)/30)*20),2)
+
+    # -- PATENTE SEGURIDAD -- #
+    pat_seg_promedio  = 0.00
+    tiene_patente = True if result_rules.H056 and "CASA" in contract.cct_id.sindicato else False
+    if tiene_patente:
+        current_value_pat_seg = payslip.rule_parameter('UPADEP_CASA_PAT_SEG')
+        parameter_list_ids = payslip.env['base.time.parameter'].search([('code','=','UPADEP_CASA_PAT_SEG')],limit = 1)
+        previus_version_upadep_pat_seg_list = [version_id for version_id in parameter_list_ids[0].version_ids if payslip.date_from > version_id.date_from]
+        previus_version_pat_seg_value = sorted(previus_version_upadep_pat_seg_list)[0].value
+        pat_seg_promedio = round(((float(previus_version_pat_seg_value)/30)*10) + ((float(current_value_pat_seg)/30)*20),2)
+        
+    # -- FERIADOS -- #
+    feriados = result_rules.H050.total if result_rules.H050 else 0.00
+    
+    #Patente 
+    patente = result_rules.H012.total if result_rules.H012 else 0.00
+    
+    #-- NUEVO BASICO --#
+    new_basic = basic_average + antiguedad_average + rx_average + feriados + patente + pat_seg_promedio
+    new_hr = round(((new_basic/contract.cct_id.basic_div)*1.1333),2)
+    result_name = "HS NOCTURNAS AL 100% INC" 
+    result = new_hr
+else:
+    result_name = "HS NOCTURNAS AL 100%"
+    result = (((categories.CBASIC + feriados)/contract.cct_id.basic_div)*1.1333)
+        </field>
+    </record>
+    
+    <!-- HORAS DIURNAS AL 100 -->
+    <record id="l10n_ar_payroll_lu_upadep.rules_UPADEP_HSD_100" model="hr.salary.rule">
+        <field name="amount_python_compute">
+esMesAumento = any(p.from_date == payslip.date_from for p in contract.cct_category_id.category_price_ids) or False
+result_qty = worked_days.H141.number_of_hours
+result_rate = (payslip.env['hr.overtime.type'].search([('payroll_code','=','H141')],limit = 1)[0].add_percentage_amount)
+feriados = result_rules.H050.total if result_rules.H050 else 0.00
+if esMesAumento:
+    # -- VALORES DE CATEGORIA -- #
+    #current_value = contract.cct_category_id.current_value
+    previus_category_price_ids_list = [cat_id for cat_id in contract.cct_category_id.category_price_ids if payslip.date_from > cat_id.from_date]
+    previus_value = sorted(previus_category_price_ids_list)[0].value 
+    #basic_average = ((previus_value/30)*10) + ((current_value/30)*20)
+    basic_average = ((previus_value/30)*10) + ((BASIC/30)*20)
+    
+    # --- ANTIGUEDAD --#
+    if "CASA" in contract.cct_id.sindicato:
+        if employee.get_service_duration_from_date(payslip.date_to).get('years') > 0.00:
+            current_value_ant = payslip.rule_parameter('UPADEP_CASA_ANTIGUEDAD')
+            parameter_list_ids = payslip.env['base.time.parameter'].search([('code','=','UPADEP_CASA_ANTIGUEDAD')],limit = 1)
+            previus_version_upadep_ant_list = [version_id for version_id in parameter_list_ids[0].version_ids if payslip.date_from > version_id.date_from]
+            previus_version_ant_value = sorted(previus_version_upadep_ant_list)[0].value
+            antiguedad_average = round(((float(previus_version_ant_value)/30)*10) + ((float(current_value_ant)/30)*20),2) * employee.get_service_duration_from_date(payslip.date_to).get('years')
+        else:
+            antiguedad_average = 0.00
+    else:
+        antiguedad_average = (basic_average*employee.get_service_duration_from_date(payslip.date_to).get('years') or 0.00)/100
+       
+    # -- VALORES DE RX -- # 
+    #Verificar si existe este parametro en el payslip 
+    rx_average = 0.00
+    if inputs.H055:
+        current_value_rx = payslip.rule_parameter('UPADEP_RX')
+        parameter_list_ids = payslip.env['base.time.parameter'].search([('code','=','UPADEP_RX')],limit = 1)
+        previus_version_upadep_rx_list = [version_id for version_id in parameter_list_ids[0].version_ids if payslip.date_from > version_id.date_from]
+        previus_version_rx_value = sorted(previus_version_upadep_rx_list)[0].value
+        rx_average = round(((float(previus_version_rx_value)/30)*10) + ((float(current_value_rx)/30)*20),2)
+    
+    # -- PATENTE SEGURIDAD -- #
+    pat_seg_promedio  = 0.00
+    tiene_patente = True if result_rules.H056 and "CASA" in contract.cct_id.sindicato else False
+    if tiene_patente:
+        current_value_pat_seg = payslip.rule_parameter('UPADEP_CASA_PAT_SEG')
+        parameter_list_ids = payslip.env['base.time.parameter'].search([('code','=','UPADEP_CASA_PAT_SEG')],limit = 1)
+        previus_version_upadep_pat_seg_list = [version_id for version_id in parameter_list_ids[0].version_ids if payslip.date_from > version_id.date_from]
+        previus_version_pat_seg_value = sorted(previus_version_upadep_pat_seg_list)[0].value
+        pat_seg_promedio = round(((float(previus_version_pat_seg_value)/30)*10) + ((float(current_value_pat_seg)/30)*20),2)
+    
+    # -- BASIC DIV -- #
+    feriados = result_rules.H050.total if result_rules.H050 else 0.00
+    
+    #Patente 
+    patente = result_rules.H012.total if result_rules.H012 else 0.00
+    
+    #-- NUEVO BASICO --#
+    new_basic = basic_average + antiguedad_average + rx_average + feriados + patente + pat_seg_promedio
+    new_hr = round(((new_basic/contract.cct_id.basic_div)),2)
+    result_name = "HS DIURNAS AL 100% INC"
+    result = new_hr
+else:
+    result_name = "HS DIURNAS AL 100%"
+    result = (((categories.CBASIC + feriados)/contract.cct_id.basic_div))
+        </field>
+    </record>
+    
+    <!-- PREMIO PRODUCCION AL 50% H155 -->
+    <record id="l10n_ar_payroll_lu_upadep.rules_UPADEP_PREM_PROD" model="hr.salary.rule">
+        <field name="amount_python_compute">
+# -- VARIABLES PARA EL CALCULO -- #
+esMesAumento = any(p.from_date == payslip.date_from for p in contract.cct_category_id.category_price_ids) or False
+arr_ov = ['H140','H141','H143','H144']
+result_OVHD_50_UPADEP = 0.00
+result_OVHD_100_UPADEP = 0.00
+result_OVHNOC_50_UPADEP = 0.00
+result_OVHNOC_100_UPADEP = 0.00
+
+# -- CALCULO MES DE AUMENTO -- #
+if esMesAumento:
+    # -- CALCULO DE VALORES CATEGORIA -- #
+    #current_category_value = contract.cct_category_id.current_value
+    previus_category_price_ids_list = [cat_id for cat_id in contract.cct_category_id.category_price_ids if payslip.date_from > cat_id.from_date]
+    previus_value = previus_category_price_ids_list[0].value
+    basic_average = ((previus_value/30)*10) + ((BASIC/30)*20)
+
+    # --- ANTIGUEDAD --#
+    if "CASA" in contract.cct_id.sindicato:
+        if employee.get_service_duration_from_date(payslip.date_to).get('years') > 0.00:
+            current_value_ant = payslip.rule_parameter('UPADEP_CASA_ANTIGUEDAD')
+            parameter_list_ids = payslip.env['base.time.parameter'].search([('code','=','UPADEP_CASA_ANTIGUEDAD')],limit = 1)
+            previus_version_upadep_ant_list = [version_id for version_id in parameter_list_ids[0].version_ids if payslip.date_from > version_id.date_from]
+            previus_version_ant_value = sorted(previus_version_upadep_ant_list)[0].value
+            antiguedad_average = round(((float(previus_version_ant_value)/30)*10) + ((float(current_value_ant)/30)*20),2) * employee.get_service_duration_from_date(payslip.date_to).get('years')
+        else:
+            antiguedad_average = 0.00
+    else:
+        antiguedad_average = (basic_average*employee.get_service_duration_from_date(payslip.date_to).get('years') or 0.00)/100
+    
+    # -- CALCULO VALORES DE RX -- #
+    rx_average = 0.00
+    if inputs.H055:
+        current_value_rx = payslip.rule_parameter('UPADEP_RX')
+        parameter_list_id = payslip.env['base.time.parameter'].search([('code','=','UPADEP_RX')],limit = 1)
+        previus_version_upadep_rx_list = [version_id for version_id in parameter_list_id.version_ids if payslip.date_from > version_id.date_from]
+        previus_version_rx_value = previus_version_upadep_rx_list[0].value
+        rx_average = round(((float(previus_version_rx_value)/30)*10) + ((float(current_value_rx)/30)*20),2)
+
+
+    # -- PATENTE SEGURIDAD -- #
+    pat_seg_promedio  = 0.00
+    tiene_patente = True if result_rules.H056 and "CASA" in contract.cct_id.sindicato else False
+    if tiene_patente:
+        current_value_pat_seg = payslip.rule_parameter('UPADEP_CASA_PAT_SEG')
+        parameter_list_ids = payslip.env['base.time.parameter'].search([('code','=','UPADEP_CASA_PAT_SEG')],limit = 1)
+        previus_version_upadep_pat_seg_list = [version_id for version_id in parameter_list_ids[0].version_ids if payslip.date_from > version_id.date_from]
+        previus_version_pat_seg_value = sorted(previus_version_upadep_pat_seg_list)[0].value
+        pat_seg_promedio = round(((float(previus_version_pat_seg_value)/30)*10) + ((float(current_value_pat_seg)/30)*20),2)
+        
+    # -- CALCULO FERIADO -- #
+    feriados = result_rules.H050.total if result_rules.H050 else 0.00
+    
+    #Patente 
+    patente = result_rules.H012.total if result_rules.H012 else 0.00
+    
+    # -- NUEVO BASICO -- #
+    new_basic = basic_average + antiguedad_average + rx_average + feriados + patente + pat_seg_promedio
+    new_hr_price =  round((new_basic/contract.cct_id.basic_div),2)
+    
+    #TODO: SE PODRIA MEJORAR CON FUNCIONES AUX
+    # -- CALCULO HORAS DIURNAS AL 50% -- #
+    if 'H140' in worked_days.dict.keys():
+        percentage = (payslip.env['hr.overtime.type'].search([('payroll_code','=','H140')],limit = 1)[0].add_percentage_amount)/100
+        result_qty_OVHD_50_UPADEP = worked_days.H140.number_of_hours
+        result_OVHD_50_UPADEP = (new_hr_price*result_qty_OVHD_50_UPADEP)*percentage
+    
+    # -- CALCULO HORAS DIURNAS AL 100% -- #
+    if 'H141' in worked_days.dict.keys():
+        percentage = (payslip.env['hr.overtime.type'].search([('payroll_code','=','H141')],limit = 1)[0].add_percentage_amount)/100
+        result_qty_OVHD_100_UPADEP = worked_days.H141.number_of_hours
+        result_OVHD_100_UPADEP = (new_hr_price*result_qty_OVHD_100_UPADEP)*percentage
+    
+    # -- CALCULO HORAS NOC AL 50% -- #
+    if 'H143' in worked_days.dict.keys():
+        percentage = (payslip.env['hr.overtime.type'].search([('payroll_code','=','H143')],limit = 1)[0].add_percentage_amount)/100
+        result_qty_OVHNOC_50_UPADEP = worked_days.H143.number_of_hours
+        result_OVHNOC_50_UPADEP = ((new_hr_price*result_qty_OVHNOC_50_UPADEP)*1.1333)*percentage
+    
+    # -- CALCULO HORAS NOC AL 100% -- #
+    if 'H144' in worked_days.dict.keys():
+        percentage = (payslip.env['hr.overtime.type'].search([('payroll_code','=','H144')],limit = 1)[0].add_percentage_amount)/100
+        result_qty_OVHNOC_100_UPADEP = worked_days.H144.number_of_hours
+        result_OVHNOC_100_UPADEP = ((new_hr_price*result_qty_OVHNOC_100_UPADEP)*1.1333)*percentage
+else:
+    # -- NO ES MES AUMENTO -- #        
+    feriados = result_rules.H050.total if result_rules.H050 else 0.00
+    basic_hr_price = (categories.CBASIC+feriados)/contract.cct_id.basic_div
+    # -- CALCULO HORAS DIURNAS AL 50% -- #
+    if 'H140' in worked_days.dict.keys():
+        percentage = (payslip.env['hr.overtime.type'].search([('payroll_code','=','H140')],limit = 1)[0].add_percentage_amount)/100
+        result_qty_OVHD_50_UPADEP = worked_days.H140.number_of_hours
+        result_OVHD_50_UPADEP = (basic_hr_price*result_qty_OVHD_50_UPADEP)*percentage
+    
+    # -- CALCULO HORAS DIURNAS AL 100% -- #
+    if 'H141' in worked_days.dict.keys():
+        percentage = (payslip.env['hr.overtime.type'].search([('payroll_code','=','H141')],limit = 1)[0].add_percentage_amount)/100
+        result_qty_OVHD_100_UPADEP = worked_days.H141.number_of_hours
+        result_OVHD_100_UPADEP = (basic_hr_price*result_qty_OVHD_100_UPADEP)*percentage
+    
+    # -- CALCULO HORAS NOC AL 50% -- #
+    if 'H143' in worked_days.dict.keys():
+        percentage = (payslip.env['hr.overtime.type'].search([('payroll_code','=','H143')],limit = 1)[0].add_percentage_amount)/100
+        result_qty_OVHNOC_50_UPADEP = worked_days.H143.number_of_hours
+        result_OVHNOC_50_UPADEP = ((basic_hr_price*result_qty_OVHNOC_50_UPADEP)*1.1333)*percentage
+    
+    # -- CALCULO HORAS NOC AL 100% -- #
+    if 'H144' in worked_days.dict.keys():
+        percentage = (payslip.env['hr.overtime.type'].search([('payroll_code','=','H144')],limit = 1)[0].add_percentage_amount)/100
+        result_qty_OVHNOC_100_UPADEP = worked_days.H144.number_of_hours
+        result_OVHNOC_100_UPADEP = ((basic_hr_price*result_qty_OVHNOC_100_UPADEP)*1.1333)*percentage
+
+
+result_name =  'PREMIO PRODUCCION' 
+result = result_OVHD_50_UPADEP + result_OVHD_100_UPADEP + result_OVHNOC_50_UPADEP + result_OVHNOC_100_UPADEP
+        </field>
+    </record>
+        
+</odoo>
